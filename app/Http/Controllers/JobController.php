@@ -9,16 +9,47 @@ class JobController extends Controller
 {
     public function index()
     {
-        // Méthode pour afficher la liste des offres d'emploi
+        $jobs = Job::all();
+        return view('jobs.index', ['jobs' => $jobs]);
     }
-
+    public function create()
+    {
+        return view('jobs.create');
+    }
     public function show($id)
     {
-        // Méthode pour afficher les détails d'une offre d'emploi
+        $job = Job::findOrFail($id);
+        return view('jobs.show', ['job' => $job]);
     }
 
     public function search(Request $request)
     {
-        // Méthode pour permettre à un utilisateur de rechercher des offres d'emploi
+        $title = $request->input('title');
+        $skills = $request->input('skills');
+        $contractType = $request->input('contract_type');
+        $location = $request->input('location');
+
+        $jobs = Job::query();
+
+        if ($title) {
+            $jobs->where('title', 'like', '%' . $title . '%');
+        }
+
+        if ($skills) {
+            $jobs->where('skills', 'like', '%' . $skills . '%');
+        }
+
+        if ($contractType) {
+            $jobs->where('contract_type', $contractType);
+        }
+
+        if ($location) {
+            $jobs->where('location', 'like', '%' . $location . '%');
+        }
+
+        $results = $jobs->get();
+        return view('jobs.search', ['results' => $results]);
     }
+    
 }
+

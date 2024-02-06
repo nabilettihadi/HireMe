@@ -4,36 +4,50 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Models\Job;
+use App\Models\Application;
 
 class CompanyController extends Controller
 {
     public function index()
     {
-        // Méthode pour afficher la liste des entreprises
+        $companies = Company::all();
+        return view('companies.index', ['companies' => $companies]);
     }
 
     public function show($id)
     {
-        // Méthode pour afficher le profil d'une entreprise
+        $company = Company::findOrFail($id);
+        return view('companies.show', ['company' => $company]);
     }
 
     public function edit($id)
     {
-        // Méthode pour afficher le formulaire d'édition du profil de l'entreprise
+        $company = Company::findOrFail($id);
+        return view('companies.edit', ['company' => $company]);
     }
 
     public function update(Request $request, $id)
     {
-        // Méthode pour mettre à jour le profil de l'entreprise
+        $company = Company::findOrFail($id);
+        $company->update($request->all());
+        return redirect()->route('companies.show', ['company' => $company->id]);
     }
 
     public function publishJob(Request $request, $companyId)
     {
-        // Méthode pour permettre à une entreprise de publier une offre d'emploi
+        $company = Company::findOrFail($companyId);
+        $job = new Job();
+        $job->fill($request->all());
+        $job->company()->associate($company);
+        $job->save();
+        return response()->json(['message' => 'Job published successfully'], 200);
     }
 
     public function viewApplications($companyId)
     {
-        // Méthode pour afficher les candidatures reçues par une entreprise
+        $company = Company::findOrFail($companyId);
+        $applications = $company->applications;
+        return view('companies.applications', ['company' => $company, 'applications' => $applications]);
     }
 }
