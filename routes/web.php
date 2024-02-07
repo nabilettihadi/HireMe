@@ -19,15 +19,13 @@ Route::get('/', function () {
 });
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\JobController;
 
 Route::get('/companies', [CompanyController::class, 'index'])->name('company.index');
 Route::get('/companies/{id}', [CompanyController::class, 'show'])->name('company.show');
 Route::get('/companies/{id}/edit', [CompanyController::class, 'edit'])->name('company.edit');
 Route::put('/companies/{id}', [CompanyController::class, 'update'])->name('company.update');
 Route::post('/companies/{companyId}/publish-job', [CompanyController::class, 'publishJob'])->name('company.publishJob');
-
-
-use App\Http\Controllers\JobController;
 
 // Route pour afficher la liste des offres d'emploi
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');

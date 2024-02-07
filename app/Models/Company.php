@@ -11,4 +11,8 @@ class Company extends Model
     protected $fillable = [
         'name', 'logo', 'slogan', 'industry', 'description',
     ];
+
+    public function jobOffers() {
+        return $this->hasMany(JobOffer::class);
+    }
 }

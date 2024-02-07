@@ -2,6 +2,22 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
+        <!-- Role -->
+        <div class="mt-4">
+            <x-input-label for="role" :value="__('Role')" />
+            <div>
+                <label class="inline-flex items-center">
+                    <input type="radio" class="form-radio" name="role" value="job_seeker" checked>
+                    <span class="ml-2">{{ __('Job Seeker') }}</span>
+                </label>
+                <label class="inline-flex items-center ml-6">
+                    <input type="radio" class="form-radio" name="role" value="company">
+                    <span class="ml-2">{{ __('Company') }}</span>
+                </label>
+            </div>
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        </div>
+
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
@@ -50,3 +66,4 @@
         </div>
     </form>
 </x-guest-layout>
+

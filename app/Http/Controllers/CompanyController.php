@@ -12,13 +12,13 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Company::all();
-        return view('companies.index', ['companies' => $companies]);
+        return view('companies.index', compact('companies'));
     }
 
     public function show($id)
     {
         $company = Company::findOrFail($id);
-        return view('companies.show', ['company' => $company]);
+        return view('companies.show', compact('company'));
     }
 
     public function edit($id)

@@ -8,6 +8,18 @@ use App\Models\Job;
 
 class ApplicationController extends Controller
 {
+    
+    public function index()
+    {
+        $applications = Application::all();
+        return view('applications.index', compact('applications'));
+    }
+
+    public function show($id)
+    {
+        $application = Application::findOrFail($id);
+        return view('applications.show', compact('application'));
+    }
     public function apply(Request $request, $jobId)
     {
         // Vérifier si l'utilisateur est authentifié
