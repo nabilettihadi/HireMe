@@ -21,26 +21,46 @@ Route::get('/', function () {
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\JobController;
 
-Route::get('/companies', [CompanyController::class, 'index'])->name('company.index');
-Route::get('/companies/{id}', [CompanyController::class, 'show'])->name('company.show');
-Route::get('/companies/{id}/edit', [CompanyController::class, 'edit'])->name('company.edit');
-Route::put('/companies/{id}', [CompanyController::class, 'update'])->name('company.update');
-Route::post('/companies/{companyId}/publish-job', [CompanyController::class, 'publishJob'])->name('company.publishJob');
 
-// Route pour afficher la liste des offres d'emploi
-Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\SkillController;
+use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\EducationController;
+use App\Http\Controllers\LanguageController;
 
-// Route pour afficher les détails d'une offre d'emploi spécifique
-Route::get('/jobs/{id}', [JobController::class, 'show'])->name('jobs.show');
+use App\Http\Controllers\JobOfferController;
+use App\Http\Controllers\ApplicationController;
 
-// Route pour afficher le formulaire de création d'une nouvelle offre d'emploi
-Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
-// Route pour enregistrer une nouvelle offre d'emploi dans la base de données
-Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
+Route::get('/profiles/{id}/edit', [UserProfileController::class, 'edit'])->name('profiles.edit');
+Route::put('/profiles/{id}', [UserProfileController::class, 'update'])->name('profiles.update');
 
-// Route pour permettre à un utilisateur de postuler à une offre d'emploi
-Route::post('/jobs/{id}/apply', [JobController::class, 'apply'])->name('jobs.apply');
+Route::get('/skills', [SkillController::class, 'index'])->name('skills.index');
+Route::get('/skills/{id}', [SkillController::class, 'show'])->name('skills.show');
+
+Route::get('/experiences', [ExperienceController::class, 'index'])->name('experiences.index');
+Route::get('/experiences/{id}', [ExperienceController::class, 'show'])->name('experiences.show');
+
+Route::get('/educations', [EducationController::class, 'index'])->name('educations.index');
+Route::get('/educations/{id}', [EducationController::class, 'show'])->name('educations.show');
+
+Route::get('/languages', [LanguageController::class, 'index'])->name('languages.index');
+Route::get('/languages/{id}', [LanguageController::class, 'show'])->name('languages.show');
+
+Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
+Route::get('/companies/{id}', [CompanyController::class, 'show'])->name('companies.show');
+
+Route::get('/job-offers', [JobOfferController::class, 'index'])->name('job_offers.index');
+Route::get('/job-offers/{id}', [JobOfferController::class, 'show'])->name('job_offers.show');
+
+Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
+Route::get('/applications/{id}', [ApplicationController::class, 'show'])->name('applications.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
