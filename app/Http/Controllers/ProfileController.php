@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Admin;
+use App\Models\Company;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +18,20 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = $request->user();
+
+        // Vérifier si l'utilisateur est un administrateur
+        if ($user instanceof Admin) {
+            return view('admin.profile.edit', compact('user'));
+        }
+
+        // Vérifier si l'utilisateur est une entreprise
+        if ($user instanceof Company) {
+            return view('company.profile.edit', compact('user'));
+        }
+
+        // Si l'utilisateur est un utilisateur standard
+        return view('profile.edit', compact('user'));
     }
 
     /**

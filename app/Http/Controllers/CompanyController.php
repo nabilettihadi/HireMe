@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JobOffer;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\Job;
@@ -37,10 +38,15 @@ class CompanyController extends Controller
     public function publishJob(Request $request, $companyId)
     {
         $company = Company::findOrFail($companyId);
-        $job = new Job();
-        $job->fill($request->all());
-        $job->company()->associate($company);
-        $job->save();
+        
+        // Valider les données du formulaire
+        $request->validate([
+            // Ajoutez les règles de validation nécessaires ici
+        ]);
+        
+        $job = new JobOffer($request->all());
+        $company->jobs()->save($job);
+        
         return response()->json(['message' => 'Job published successfully'], 200);
     }
 
@@ -51,3 +57,4 @@ class CompanyController extends Controller
         return view('companies.applications', ['company' => $company, 'applications' => $applications]);
     }
 }
+
