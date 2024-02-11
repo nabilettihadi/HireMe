@@ -63,5 +63,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
+    public function isAdmin()
+    {
+        // Votre logique pour déterminer si l'utilisateur est un administrateur
+        return $this->role === 'Administrateur'; // Assurez-vous d'adapter cette logique à votre système de gestion des rôles
+    }
 }

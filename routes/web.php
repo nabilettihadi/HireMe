@@ -33,11 +33,13 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
 // Routes pour l'administration
-Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-Route::get('/admin/users', [AdminController::class, 'manageUsers'])->name('admin.manageUsers');
-Route::get('/admin/companies', [AdminController::class, 'manageCompanies'])->name('admin.manageCompanies');
-Route::get('/admin/job_offers', [AdminController::class, 'manageJobs'])->name('admin.manageJobs');
-Route::get('/admin/statistics', [AdminController::class, 'viewStatistics'])->name('admin.viewStatistics');
+Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function (){
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/users', [AdminController::class, 'manageUsers'])->name('admin.manageUsers');
+    Route::get('/admin/companies', [AdminController::class, 'manageCompanies'])->name('admin.manageCompanies');
+    Route::get('/admin/job_offers', [AdminController::class, 'manageJobs'])->name('admin.manageJobs');
+    Route::get('/admin/statistics', [AdminController::class, 'viewStatistics'])->name('admin.viewStatistics');
+});
 
 Route::get('/skills', [SkillController::class, 'index'])->name('skills.index');
 Route::get('/skills/{id}', [SkillController::class, 'show'])->name('skills.show');
