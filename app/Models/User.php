@@ -20,6 +20,10 @@ class User extends Authenticatable
         return $this->role === 'Administrateur';
     }
 
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
     public function profile()
     {
         return $this->hasOne(UserProfile::class);

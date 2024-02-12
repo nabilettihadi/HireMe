@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Application;
-use App\Models\Job;
 use App\Models\JobOffer;
+use Illuminate\Support\Facades\Auth;
 
 class ApplicationController extends Controller
 {
@@ -35,7 +35,7 @@ class ApplicationController extends Controller
     public function apply(Request $request, $jobId)
     {
         // Vérifier si l'utilisateur est authentifié (auth middleware)
-        $user = $request->user();
+        $user = Auth::user();
         if (!$user) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
@@ -47,7 +47,7 @@ class ApplicationController extends Controller
         }
 
         // Vérifier si l'utilisateur a déjà postulé à cette offre d'emploi
-        if ($user->applications()->where('job_id', $jobId)->exists()) {
+        if ($user->applications->where('job_id', $jobId)->exists()) {
             return response()->json(['message' => 'Already applied to this job'], 400);
         }
 
@@ -72,3 +72,4 @@ class ApplicationController extends Controller
         return response()->json(['applications' => $applications], 200);
     }
 }
+
