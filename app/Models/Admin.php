@@ -16,6 +16,8 @@ class Admin extends Model
         'email',
         // Ajoutez d'autres attributs si nécessaire
     ];
-
-    // Définissez les relations ici si nécessaire
+    public function isAdmin()
+    {
+        return $this->role === 'Administrateur';
+    }
 }

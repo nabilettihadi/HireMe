@@ -29,7 +29,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -46,6 +46,18 @@ class RegisteredUserController extends Controller
                 'password' => bcrypt($request->password),
                 'role' => 'Entreprise', 
             ]);
+            // Redirect company to their specific dashboard
+            return redirect()->route('company.dashboard');
+        } elseif ($request->role === 'admin') {
+            // Store user as admin
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'role' => 'Administrateur',
+            ]);
+            // Redirect admin to their specific dashboard
+            return redirect()->route('admin.dashboard');
         } else {
             // Store user
             $user = User::create([
@@ -54,9 +66,8 @@ class RegisteredUserController extends Controller
                 'password' => bcrypt($request->password),
                 'role' => 'Utilisateur',
             ]);
+            // Redirect user to their specific dashboard
+            return redirect()->route('users.dashboard');
         }
-
-        // Redirect to login page
-        return redirect()->route('login');
     }
     }

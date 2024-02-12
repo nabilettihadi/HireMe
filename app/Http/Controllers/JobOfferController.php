@@ -25,13 +25,36 @@ class JobOfferController extends Controller
         return view('job_offers.show', compact('jobOffer'));
     }
 
-    public function create()
-    {
-        return view('job_offers.create');
-    }
+    function create()
+   {
+       return view('job_offers.create');
+   }
+
+   /**
+    * Stocke une nouvelle offre d'emploi dans la base de données.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\RedirectResponse
+    */
+    function store(Request $request)
+   {
+       // Validation des données du formulaire
+       $validatedData = $request->validate([
+           'title' => 'required|string|max:255',
+           'description' => 'required|string',
+           // Ajoutez ici d'autres règles de validation pour les champs de votre formulaire
+       ]);
+
+       // Création de l'offre d'emploi dans la base de données
+       JobOffer::create($validatedData);
+
+       // Redirection avec un message de succès
+       return redirect()->route('job_offers.index')->with('success', 'L\'offre d\'emploi a été créée avec succès.');
+   }
+}
 
 
-    public function search(Request $request)
+     function search(Request $request)
     {
         // Récupérer les paramètres de recherche
         $title = $request->input('title');
@@ -65,6 +88,5 @@ class JobOfferController extends Controller
         // Retourner les résultats de la recherche à la vue
         return view('jobs.search', ['results' => $results]);
     }
-}
 
 

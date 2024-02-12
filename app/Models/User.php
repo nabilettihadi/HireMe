@@ -11,26 +11,40 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-    public function profile() {
+    public function isEntreprise()
+    {
+        return $this->role === 'Entreprise';
+    }
+    public function isAdmin()
+    {
+        return $this->role === 'Administrateur';
+    }
+
+    public function profile()
+    {
         return $this->hasOne(UserProfile::class);
     }
-    public function skills() {
+    public function skills()
+    {
         return $this->belongsToMany(Skill::class);
     }
-    public function experiences() {
+    public function experiences()
+    {
         return $this->hasMany(Experience::class);
     }
 
-    public function educations() {
+    public function educations()
+    {
         return $this->hasMany(Education::class);
     }
 
-    public function languages() {
+    public function languages()
+    {
         return $this->belongsToMany(Language::class);
     }
 
 
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -63,9 +77,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function isAdmin()
-    {
-        // Votre logique pour déterminer si l'utilisateur est un administrateur
-        return $this->role === 'Administrateur'; // Assurez-vous d'adapter cette logique à votre système de gestion des rôles
-    }
 }

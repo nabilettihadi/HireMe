@@ -10,6 +10,10 @@ use App\Models\Application;
 
 class CompanyController extends Controller
 {
+    public function dashboard()
+    {
+        return view('companies.dashboard');
+    }
     public function index()
     {
         $companies = Company::all();

@@ -25,7 +25,7 @@ use App\Http\Controllers\ApplicationController;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/users/dashboard', [UserController::class, 'dashboard'])->name('users.dashboard');
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
@@ -54,6 +54,7 @@ Route::get('/languages', [LanguageController::class, 'index'])->name('languages.
 Route::get('/languages/{id}', [LanguageController::class, 'show'])->name('languages.show');
 
 // Routes pour les entreprises
+Route::get('/companies/dashboard', [CompanyController::class, 'dashboard'])->name('companies.dashboard');
 Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
 Route::get('/companies/{id}', [CompanyController::class, 'show'])->name('companies.show');
 Route::get('/companies/{id}/edit', [CompanyController::class, 'edit'])->name('companies.edit');

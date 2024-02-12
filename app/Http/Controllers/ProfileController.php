@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+
 use App\Models\Admin;
 use App\Models\Company;
 use Illuminate\Http\RedirectResponse;
@@ -10,9 +11,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-
+use App\Models\User;
 class ProfileController extends Controller
-{
+{   public function completeProfile()
+    {
+        $user = Auth::user();
+        
+        if ($user instanceof Company) {
+            // Rediriger l'utilisateur vers la page de l'entreprise s'il est une entreprise
+            return redirect()->route('company.profile');
+        } else {
+            // Rediriger l'utilisateur vers sa propre page de profil
+            return redirect()->route('user.profile');
+        }
+    }
     /**
      * Display the user's profile form.
      */

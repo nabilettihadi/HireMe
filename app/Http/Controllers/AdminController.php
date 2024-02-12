@@ -27,7 +27,7 @@ class AdminController extends Controller
         $users = User::paginate(10);
         
         // Afficher la vue avec la liste paginée des utilisateurs
-        return view('admin.users.index', compact('users'));
+        return view('admin.users', compact('users'));
     }
 
     public function manageCompanies()
@@ -36,7 +36,7 @@ class AdminController extends Controller
         $companies = Company::paginate(10);
         
         // Afficher la vue avec la liste paginée des entreprises
-        return view('admin.companies.index', compact('companies'));
+        return view('admin.companies', compact('companies'));
     }
 
     public function manageJobs()
@@ -45,7 +45,7 @@ class AdminController extends Controller
         $jobs = JobOffer::paginate(10);
         
         // Afficher la vue avec la liste paginée des offres d'emploi
-        return view('admin.jobs.index', compact('jobs'));
+        return view('admin.job_offers', compact('jobs'));
     }
 
     public function viewStatistics()

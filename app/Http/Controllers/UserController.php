@@ -11,6 +11,10 @@ use App\Models\Application;
 
 class UserController extends Controller
 {
+    public function dashboard()
+    {
+        return view('users.dashboard');
+    }
     public function index()
     {
         $users = User::all();
