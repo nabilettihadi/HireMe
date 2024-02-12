@@ -13,18 +13,23 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\User;
 class ProfileController extends Controller
-{   public function completeProfile()
+{
+    
+    public function completeProfile()
     {
         $user = Auth::user();
         
-        if ($user instanceof Company) {
-            // Rediriger l'utilisateur vers la page de l'entreprise s'il est une entreprise
-            return redirect()->route('company.profile');
+        // Vérifier le type d'utilisateur et rediriger en conséquence
+        if ($user instanceof User) {
+            return view('profiles.user.complete', compact('user'));
+        } elseif ($user instanceof Company) {
+            return view('profiles.company.complete', compact('user'));
         } else {
-            // Rediriger l'utilisateur vers sa propre page de profil
-            return redirect()->route('user.profile');
+            // Redirection vers une page d'accueil appropriée si l'utilisateur n'est ni un utilisateur ni une entreprise
+            return redirect()->route('dashboard');
         }
     }
+
     /**
      * Display the user's profile form.
      */
