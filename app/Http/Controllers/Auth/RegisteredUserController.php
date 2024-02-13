@@ -47,7 +47,7 @@ class RegisteredUserController extends Controller
                 'role' => 'Entreprise', 
             ]);
             // Redirect company to their specific dashboard
-            return redirect()->route('company.dashboard');
+            return redirect()->route('companies.dashboard');
         } elseif ($request->role === 'admin') {
             // Store user as admin
             $user = User::create([

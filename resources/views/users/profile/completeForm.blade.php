@@ -3,10 +3,9 @@
 @section('content')
     <div class="container mx-auto">
         <h1 class="text-2xl font-bold mb-4">Complétez votre profil</h1>
-        <form action="{{ route('profile.complete') }}" method="POST" enctype="multipart/form-data" class="max-w-md mx-auto">
+        <form action="{{ route('profile.completeProfile') }}" method="POST">
             @csrf
-            @method('PUT')
-
+            
             <div class="mb-4">
                 <label for="photo" class="block mb-2">Photo de profil:</label>
                 <input type="file" id="photo" name="photo" class="form-input">
@@ -47,7 +46,9 @@
                 <input type="file" id="resume" name="resume" class="form-input">
             </div>
 
-            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <x-primary-button class="ms-3">
+                {{ __('enregister') }}
+            </x-primary-button>
         </form>
     </div>
 @endsection

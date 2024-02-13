@@ -12,24 +12,43 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\User;
+use App\Models\UserProfile;
 class ProfileController extends Controller
 {
-    
-    public function completeProfile()
-    {
-        $user = Auth::user();
-        
-        // Vérifier le type d'utilisateur et rediriger en conséquence
-        if ($user instanceof User) {
-            return view('users.profile.complete', compact('user'));
-        } elseif ($user instanceof Company) {
-            return view('company.profiles.complete', compact('user'));
-        } else {
-            // Redirection vers une page d'accueil appropriée si l'utilisateur n'est ni un utilisateur ni une entreprise
-            return redirect()->route('dashboard');
-        }
-    }
+    public function completeProfile(Request $request)
+{
+    // Validation des données
+    $validatedData = $request->validate([
+        'title' => 'required|string',
+        'current_position' => 'required|string',
+        'industry' => 'required|string',
+        'address' => 'required|string',
+        'contact_information' => 'required|string',
+        'about' => 'required|string',
+        'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+    dd($validatedData);
 
+    // Enregistrement de la photo
+    $photoPath = $request->file('photo')->store('photos', 'public');
+
+    // Création d'un nouvel enregistrement UserProfile
+    $userProfile = new UserProfile();
+    $userProfile->user_id = auth()->id(); 
+    $userProfile->title = $validatedData['title'];
+    $userProfile->current_position = $validatedData['current_position'];
+    $userProfile->industry = $validatedData['industry'];
+    $userProfile->address = $validatedData['address'];
+    $userProfile->contact_information = $validatedData['contact_information'];
+    $userProfile->about = $validatedData['about'];
+    $userProfile->photo = $photoPath;
+
+
+    $userProfile->save();
+
+    // Redirection avec un message flash
+    return Redirect::route('users.dashboard')->with('success', 'Profil complété avec succès !');
+}
     /**
      * Display the user's profile form.
      */
