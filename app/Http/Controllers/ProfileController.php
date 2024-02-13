@@ -21,9 +21,9 @@ class ProfileController extends Controller
         
         // Vérifier le type d'utilisateur et rediriger en conséquence
         if ($user instanceof User) {
-            return view('profiles.user.complete', compact('user'));
+            return view('users.profile.complete', compact('user'));
         } elseif ($user instanceof Company) {
-            return view('profiles.company.complete', compact('user'));
+            return view('company.profiles.complete', compact('user'));
         } else {
             // Redirection vers une page d'accueil appropriée si l'utilisateur n'est ni un utilisateur ni une entreprise
             return redirect()->route('dashboard');

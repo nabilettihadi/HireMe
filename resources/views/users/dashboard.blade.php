@@ -29,7 +29,7 @@
                 </div>
                 <!-- Boutons d'actions utilisateur -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6">
-                    <a href="#" class="inline-flex items-center px-4 py-2 mr-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">Update Profile</a>
+                    <a href="{{ route('profile.complete') }}" class="inline-flex items-center px-4 py-2 mr-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">Complete Profile</a>
                     <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Logout</a>
                 </div>
                 <!-- Burger menu pour les écrans mobiles -->
@@ -71,7 +71,7 @@
                     <div class="px-4 py-5 sm:p-6">
                         <h3 class="text-lg font-medium text-gray-900">Update Your Profile</h3>
                         <p class="mt-2 text-sm text-gray-600">Keep your profile information up to date.</p>
-                        <a href="{{ route('profile.edit') }}" class="mt-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">Update Now &rarr;</a>
+                        <a href="{{ route('profile.complete') }}" class="mt-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">Complete Profile &rarr;</a>
                     </div>
                 </div>
                 <!-- Card pour la recherche d'emplois -->
@@ -110,4 +110,3 @@
 </body>
 
 </html>
-
