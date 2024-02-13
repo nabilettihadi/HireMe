@@ -18,6 +18,7 @@ class ProfileController extends Controller
     public function completeProfile(Request $request)
 {
     // Validation des données
+    // dd($request);
     $validatedData = $request->validate([
         'title' => 'required|string',
         'current_position' => 'required|string',
@@ -25,16 +26,16 @@ class ProfileController extends Controller
         'address' => 'required|string',
         'contact_information' => 'required|string',
         'about' => 'required|string',
-        'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'photo' => 'required|image',
     ]);
-    dd($validatedData);
+    // dd($validatedData);
 
     // Enregistrement de la photo
     $photoPath = $request->file('photo')->store('photos', 'public');
 
     // Création d'un nouvel enregistrement UserProfile
     $userProfile = new UserProfile();
-    $userProfile->user_id = auth()->id(); 
+    $userProfile->user_id = auth()->user()->id; 
     $userProfile->title = $validatedData['title'];
     $userProfile->current_position = $validatedData['current_position'];
     $userProfile->industry = $validatedData['industry'];

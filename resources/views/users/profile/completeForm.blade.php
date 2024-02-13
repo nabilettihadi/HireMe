@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mx-auto">
         <h1 class="text-2xl font-bold mb-4">Complétez votre profil</h1>
-        <form action="{{ route('profile.completeProfile') }}" method="POST">
+        <form action="{{ route('profile.completeProfile') }}" method="POST"  class="max-w-md mx-auto" enctype="multipart/form-data">
             @csrf
             
             <div class="mb-4">
