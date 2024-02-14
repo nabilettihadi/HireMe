@@ -31,7 +31,11 @@ class ProfileController extends Controller
     // dd($validatedData);
 
     // Enregistrement de la photo
-    $photoPath = $request->file('photo')->store('photos', 'public');
+    if ($request->hasFile('photo')) {
+        $image = request()->file('photo');
+        $imageName = time() . '.' .$image->getClientOriginalExtension();
+        $image->move(public_path('images'), $imageName);
+    }
 
     // Création d'un nouvel enregistrement UserProfile
     $userProfile = new UserProfile();
@@ -42,7 +46,7 @@ class ProfileController extends Controller
     $userProfile->address = $validatedData['address'];
     $userProfile->contact_information = $validatedData['contact_information'];
     $userProfile->about = $validatedData['about'];
-    $userProfile->photo = $photoPath;
+    $userProfile->photo = $imageName;
 
 
     $userProfile->save();

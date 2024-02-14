@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\Job;
 use App\Models\Application;
+use Illuminate\Support\Facades\Redirect;
 
 class CompanyController extends Controller
 {
@@ -14,6 +15,38 @@ class CompanyController extends Controller
     {
         return view('companies.dashboard');
     }
+    public function showProfileForm()
+{
+    return view('companies.profileforme');
+}
+    public function companyProfile(Request $request)
+{
+    $validatedData = $request->validate([
+        'name' => 'required|string',
+        'industry' => 'required|string',
+        'slogan' => 'required|string',
+        'description' => 'required|string',
+        'logo' => 'required|image',
+    ]);
+    if ($request->hasFile('logo')) {
+        $image = request()->file('logo');
+        $imageName = time() . '.' .$image->getClientOriginalExtension();
+        $image->move(public_path('images'), $imageName);
+    }
+
+    $companyProfile = new Company();
+    $companyProfile->user_id = auth()->user()->id; 
+    $companyProfile->name = $validatedData['name'];
+    $companyProfile->industry = $validatedData['industry'];
+    $companyProfile->slogan = $validatedData['slogan'];
+    $companyProfile->description = $validatedData['description'];
+    $companyProfile->logo = $imageName;
+
+    $companyProfile->save();
+
+    return redirect()->route('dashboard')->with('success', 'Profil complété avec succès !');
+}
+
     public function index()
     {
         $companies = Company::all();

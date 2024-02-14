@@ -64,12 +64,15 @@ Route::get('/languages/{id}', [LanguageController::class, 'show'])->name('langua
 
 // Routes pour les entreprises
 Route::prefix('companies')->name('companies.')->group(function () {
+    Route::get('/profileform', [CompanyController::class, 'showProfileForm'])->name('profileform');
+    Route::post('/complete-profile', [CompanyController::class, 'companyProfile'])->name('completeProfile');
     Route::get('/dashboard', [CompanyController::class, 'dashboard'])->name('dashboard');
     Route::get('/', [CompanyController::class, 'index'])->name('index');
     Route::get('/{id}', [CompanyController::class, 'show'])->name('show');
     Route::get('/{id}/edit', [CompanyController::class, 'edit'])->name('edit');
     Route::put('/{id}', [CompanyController::class, 'update'])->name('update');
 });
+
 
 // Routes pour les offres d'emploi
 Route::prefix('job_offers')->name('job_offers.')->group(function () {

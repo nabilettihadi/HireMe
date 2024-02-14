@@ -77,16 +77,18 @@
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-2xl font-bold mb-8">Bienvenue sur votre Tableau de Bord</h1>
 
-        <!-- Section Profil de l'entreprise -->
         <section id="profil" class="mb-8 bg-white shadow-md rounded-md p-6">
             <h2 class="text-xl font-semibold mb-4">Profil de l'entreprise</h2>
+            <!-- Ajouter le lien vers le formulaire de complétion du profil -->
+            <a href="{{ route('companies.profileform') }}" class="text-blue-500 hover:underline mb-4">Compléter le profil de l'entreprise</a>
+
             <form>
                 <label class="block mb-2" for="nom">Nom de l'entreprise:</label>
                 <input type="text" id="nom" name="nom" placeholder="Nom de l'entreprise" class="w-full px-4 py-2 border border-gray-300 rounded-md mb-4">
-
+        
                 <label class="block mb-2" for="logo">Logo de l'entreprise:</label>
                 <input type="file" id="logo" name="logo" class="w-full px-4 py-2 border border-gray-300 rounded-md mb-4">
-
+        
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Enregistrer</button>
             </form>
         </section>

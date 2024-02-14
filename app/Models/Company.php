@@ -20,4 +20,8 @@ class Company extends Model implements Authenticatable
     public function jobOffers() {
         return $this->hasMany(JobOffer::class);
     }
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -22,21 +22,21 @@ class AdminController extends Controller
     }
 
     public function manageUsers()
-    {
-        // Récupérer tous les utilisateurs avec pagination
-        $users = User::paginate(10);
-        
-        // Afficher la vue avec la liste paginée des utilisateurs
-        return view('admin.users', compact('users'));
-    }
+{
+    // Récupérer tous les utilisateurs avec le rôle "Utilisateur" et paginer les résultats
+    $users = User::where('role', 'Utilisateur')->paginate(10);
+    
+    // Afficher la vue avec la liste paginée des utilisateurs
+    return view('admin.users', compact('users'));
+}
 
     public function manageCompanies()
     {
         // Récupérer toutes les entreprises avec pagination
-        $companies = Company::paginate(10);
+        $users = User::where('role', 'Entreprise')->paginate(10);
         
         // Afficher la vue avec la liste paginée des entreprises
-        return view('admin.companies', compact('companies'));
+        return view('admin.companies', compact('users'));
     }
 
     public function manageJobs()
@@ -49,8 +49,8 @@ class AdminController extends Controller
     }
 
     public function viewStatistics()
-    {
+    {   $totalUsers = User::count();
         // Logique pour récupérer et afficher les statistiques
-        return view('admin.statistics');
+        return view('admin.statistics', compact('totalUsers'));
     }
 }

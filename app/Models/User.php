@@ -28,6 +28,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserProfile::class);
     }
+    public function Company()
+    {
+        return $this->hasOne(Company::class);
+    }
     public function skills()
     {
         return $this->belongsToMany(Skill::class);

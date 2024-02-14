@@ -1,8 +1,42 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-semibold mb-8">Tableau de bord de l'administrateur</h1>
 
-@section('content')
-    <div class="container">
-        <h1>Dashboard</h1>
-        <p>Bienvenue sur le tableau de bord de l'administration. Voici quelques statistiques :</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Gérer les utilisateurs -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Gérer les utilisateurs</h2>
+                <a href="{{ route('admin.manageUsers') }}" class="text-blue-600 hover:underline">Voir les utilisateurs</a>
+            </div>
+
+            <!-- Gérer les entreprises -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Gérer les entreprises</h2>
+                <a href="{{ route('admin.manageCompanies') }}" class="text-blue-600 hover:underline">Voir les entreprises</a>
+            </div>
+
+            <!-- Gérer les offres d'emploi -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Gérer les offres d'emploi</h2>
+                <a href="{{ route('admin.manageJobs') }}" class="text-blue-600 hover:underline">Voir les offres d'emploi</a>
+            </div>
+
+            <!-- Voir les statistiques -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Voir les statistiques</h2>
+                <a href="{{ route('admin.viewStatistics') }}" class="text-blue-600 hover:underline">Voir les statistiques</a>
+            </div>
+        </div>
     </div>
-@endsection
+</body>
+</html>
+
+
