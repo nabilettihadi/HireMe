@@ -46,7 +46,7 @@
     <div class="container mx-auto py-8">
         <div class="bg-white shadow-md rounded-lg px-8 py-10 mx-auto max-w-lg">
             <h1 class="text-2xl font-bold mb-8 text-center">Complétez votre profil</h1>
-            <form action="{{ route('companies.companyProfile') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('companies.completeProfile') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="mb-6">
         <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nom de l'entreprise</label>
