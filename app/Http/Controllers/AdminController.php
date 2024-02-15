@@ -49,8 +49,12 @@ class AdminController extends Controller
     }
 
     public function viewStatistics()
-    {   $totalUsers = User::count();
-        // Logique pour récupérer et afficher les statistiques
-        return view('admin.statistics', compact('totalUsers'));
+    {
+        // Compter le nombre total d'utilisateurs avec le rôle "Utilisateur"
+        $totalUsers = User::where('role', 'Utilisateur')->count();
+        
+        // Compter le nombre total d'entreprises avec le rôle "Entreprise"
+        $totalCompanies = User::where('role', 'Entreprise')->count();
+        return view('admin.statistics', compact('totalUsers', 'totalCompanies')); // Passer $totalCompanies à la vue
     }
 }
