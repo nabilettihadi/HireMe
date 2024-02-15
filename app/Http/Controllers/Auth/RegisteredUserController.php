@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserProfile;
 use App\Models\Company;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-
+use App\Models\CurriculumVitae;
 class RegisteredUserController extends Controller
 {
     /**
@@ -66,6 +67,10 @@ class RegisteredUserController extends Controller
                 'password' => bcrypt($request->password),
                 'role' => 'Utilisateur',
             ]);
+            $cv = CurriculumVitae::create([
+        'user_id' => $user->id, // Associer le CV à l'utilisateur
+        // Ajoutez d'autres champs si nécessaire
+    ]);
             // Redirect user to their specific dashboard
             return redirect()->route('users.dashboard');
         }

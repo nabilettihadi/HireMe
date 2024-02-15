@@ -51,7 +51,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Language::class);
     }
 
-
+    public function curriculumVitae()
+    {
+        return $this->hasOne(CurriculumVitae::class);
+    }
 
     /**
      * The attributes that are mass assignable.

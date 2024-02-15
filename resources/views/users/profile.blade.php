@@ -7,6 +7,7 @@
     <title>Tableau de Bord de l'Entreprise</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
 <body class="h-screen">
 <div class="bg-gray-100">
     <div class="container mx-auto py-8">
@@ -14,13 +15,24 @@
             <div class="col-span-4 sm:col-span-3">
                 <div class="bg-white shadow rounded-lg p-6">
                     <div class="flex flex-col items-center">
-                        <img src={{ asset('images/' . auth()->user()->profile->photo) }} class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
+                        <img src="{{ asset('images/' . auth()->user()->profile->photo) }}" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
 
-                        </img>
                         <!-- Afficher le nom de l'utilisateur -->
                         <h1 class="text-xl font-bold">{{ auth()->user()->name }}</h1>
                         <!-- Afficher le rôle de l'utilisateur -->
                         <p class="text-gray-700">{{ auth()->user()->role }}</p>
+                        
+                        <!-- Afficher le titre de l'utilisateur -->
+                        <p class="text-gray-700">Titre: {{ auth()->user()->profile->title }}</p>
+                        <!-- Afficher la position actuelle de l'utilisateur -->
+                        <p class="text-gray-700">Position actuelle: {{ auth()->user()->profile->current_position }}</p>
+                        <!-- Afficher l'industrie de l'utilisateur -->
+                        <p class="text-gray-700">Industrie: {{ auth()->user()->profile->industry }}</p>
+                        <!-- Afficher l'adresse de l'utilisateur -->
+                        <p class="text-gray-700">Adresse: {{ auth()->user()->profile->address }}</p>
+                        <!-- Afficher les informations de contact de l'utilisateur -->
+                        <p class="text-gray-700">Contact: {{ auth()->user()->profile->contact_information }}</p>
+                        
                         <div class="mt-6 flex flex-wrap gap-4 justify-center">
                             <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</a>
                             <a href="#" class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">Resume</a>
@@ -42,12 +54,7 @@
             <div class="col-span-4 sm:col-span-9">
                 <div class="bg-white shadow rounded-lg p-6">
                     <h2 class="text-xl font-bold mb-4">About Me</h2>
-                    <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus est
-                        vitae tortor ullamcorper, ut vestibulum velit convallis. Aenean posuere risus non velit egestas
-                        suscipit. Nunc finibus vel ante id euismod. Vestibulum ante ipsum primis in faucibus orci luctus
-                        et ultrices posuere cubilia Curae; Aliquam erat volutpat. Nulla vulputate pharetra tellus, in
-                        luctus risus rhoncus id.
-                    </p>
+                    <p class="text-gray-700">{{ auth()->user()->profile->about }}</p>
 
                     <h3 class="font-semibold text-center mt-3 -mb-2">
                         Find me on
@@ -104,3 +111,4 @@
 </div>
 </body>
 </html>
+
