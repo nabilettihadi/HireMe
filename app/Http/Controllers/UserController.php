@@ -15,6 +15,19 @@ class UserController extends Controller
     {
         return view('users.dashboard');
     }
+    public function profile()
+    {
+        $user = auth()->user();
+
+        // Vérifier si un utilisateur est connecté
+        if ($user) {
+            // Si un utilisateur est connecté, renvoyer la vue avec les détails de l'utilisateur
+            return view('users.profile', compact('user'));
+        } else {
+            // Si aucun utilisateur n'est connecté, rediriger vers la page de connexion
+            return redirect()->route('login');
+        }
+    }
     public function index()
     {
         $users = User::all();

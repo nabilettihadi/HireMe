@@ -30,6 +30,7 @@ Route::get('/', function () {
 // Routes pour les utilisateurs
 Route::get('/users/dashboard', [UserController::class, 'dashboard'])->name('users.dashboard');
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/profile', [UserController::class, 'profile'])->name('users.profile');
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
@@ -66,6 +67,7 @@ Route::get('/languages/{id}', [LanguageController::class, 'show'])->name('langua
 Route::prefix('companies')->name('companies.')->group(function () {
     Route::get('/profileform', [CompanyController::class, 'showProfileForm'])->name('profileform');
     Route::post('/complete-profile', [CompanyController::class, 'companyProfile'])->name('completeProfile');
+    Route::get('/profile', [CompanyController::class, 'profile'])->name('profile');
     Route::get('/dashboard', [CompanyController::class, 'dashboard'])->name('dashboard');
     Route::get('/', [CompanyController::class, 'index'])->name('index');
     Route::get('/{id}', [CompanyController::class, 'show'])->name('show');

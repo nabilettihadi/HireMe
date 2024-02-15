@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Redirect;
 
 class CompanyController extends Controller
 {
+    public function profile()
+    {
+        return view('companies.profile');
+    }
     public function dashboard()
     {
         return view('companies.dashboard');
@@ -44,7 +48,7 @@ class CompanyController extends Controller
 
     $companyProfile->save();
 
-    return redirect()->route('dashboard')->with('success', 'Profil complété avec succès !');
+    return redirect()->route('profile')->with('success', 'Profil complété avec succès !');
 }
 
     public function index()
