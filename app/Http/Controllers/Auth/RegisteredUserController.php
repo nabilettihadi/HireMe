@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Models\CurriculumVitae;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -45,7 +46,11 @@ class RegisteredUserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
-                'role' => 'Entreprise', 
+                'role' => 'Entreprise',
+            ]);
+            Company::create([
+                'user_id' => $user->id,
+                // Add other fields if needed
             ]);
             // Redirect company to their specific dashboard
             return redirect()->route('companies.dashboard');
@@ -67,12 +72,17 @@ class RegisteredUserController extends Controller
                 'password' => bcrypt($request->password),
                 'role' => 'Utilisateur',
             ]);
+
             $cv = CurriculumVitae::create([
-        'user_id' => $user->id, // Associer le CV à l'utilisateur
-        // Ajoutez d'autres champs si nécessaire
-    ]);
+                'user_id' => $user->id, // Associer le CV à l'utilisateur
+                // Ajoutez d'autres champs si nécessaire
+            ]);
+            UserProfile::create([
+                'user_id' => $user->id,
+                // Add other fields if needed
+            ]);
             // Redirect user to their specific dashboard
             return redirect()->route('users.dashboard');
         }
     }
-    }
+}
