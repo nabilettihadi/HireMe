@@ -169,6 +169,10 @@
         <div class="p-4 border-t mx-8 mt-2">
             <button class="w-1/2 block mx-auto rounded-full bg-gray-900 hover:shadow-lg font-semibold text-white px-6 py-2">Follow</button>
         </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ route('companies.profileform') }}" class="text-blue-600 hover:underline">Compléter le profil</a>
+        </div>
     </div>
 
     <!-- Sections suivantes -->

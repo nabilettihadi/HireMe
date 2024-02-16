@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Models\JobOffer;
@@ -65,7 +66,7 @@ class CompanyController extends Controller
             $company->save();
         }
     
-        return redirect()->route('profile')->with('success', 'Profil complété avec succès !');
+        return redirect()->route('companies.profile')->with('success', 'Profil complété avec succès !');
     }
 
     public function index()
