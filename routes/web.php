@@ -107,5 +107,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
     });
 });
+use App\Http\Controllers\CVController;
 
+// Route pour afficher la vue cv.blade.php
+Route::get('/cv', [CVController::class, 'show'])->name('cv.show');
+
+// Route pour télécharger le CV au format PDF
+Route::get('/cv/download', [CVController::class, 'download'])->name('cv.download');
+
+Route::post('/cv/save', [CVController::class, 'save'])->name('cv.save');
 require __DIR__.'/auth.php';

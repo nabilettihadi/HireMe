@@ -36,6 +36,7 @@
                         <div class="mt-6 flex flex-wrap gap-4 justify-center">
                             <a href="#" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">Contact</a>
                             <a href="#" class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded">Resume</a>
+                            <a href="{{ route('cv.show') }}" class="btn btn-primary">Créer un CV</a>
                         </div>
                     </div>
                     <hr class="my-6 border-t border-gray-300">

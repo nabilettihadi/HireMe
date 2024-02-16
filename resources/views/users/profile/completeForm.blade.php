@@ -20,7 +20,7 @@
             </div>
             <!-- Liens de navigation -->
             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                <a href="{{ route('profile.edit') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900">Profile</a>
+                <a href="{{ route('users.profile') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900">Profile</a>
                 <a href="{{ route('job_offers.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900">Search Jobs</a>
                 <a href="{{ route('companies.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900">Search Companies</a>
             </div>
@@ -50,7 +50,7 @@
         <!-- Menu pour les écrans mobiles -->
         <div class="sm:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="{{ route('profile.edit') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Profile</a>
+                <a href="{{ route('users.profile') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Profile</a>
                 <a href="{{ route('job_offers.index') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Search Jobs</a>
                 <a href="{{ route('companies.index') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Search Companies</a>
             </div>

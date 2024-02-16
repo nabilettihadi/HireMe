@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserProfile;
 use App\Models\JobOffer;
 
 class AdminController extends Controller
@@ -23,14 +24,15 @@ class AdminController extends Controller
     public function manageUsers()
     {
         try {
-            // Récupérer tous les utilisateurs avec le rôle "Utilisateur" et paginer les résultats
-            $users = User::where('role', 'Utilisateur')->paginate(10);
+            // Récupérer tous les utilisateurs avec le rôle "Utilisateur" et leurs profils associés
+            $users = User::where('role', 'Utilisateur')
+                ->join('user_profiles', 'users.id', '=', 'user_profiles.user_id')
+                ->select('users.*', 'user_profiles.*')
+                ->paginate(10);
         } catch (\Exception $e) {
-            // Gérer l'erreur de récupération des utilisateurs
             return redirect()->back()->with('error', 'Une erreur est survenue lors de la récupération des utilisateurs.');
         }
-
-        // Afficher la vue avec la liste paginée des utilisateurs
+    
         return view('admin.users', compact('users'));
     }
 

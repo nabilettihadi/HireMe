@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function isEntreprise()
+    public function isCompany()
     {
         return $this->role === 'Entreprise';
     }

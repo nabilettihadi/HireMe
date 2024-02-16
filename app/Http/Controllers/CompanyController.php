@@ -22,34 +22,48 @@ class CompanyController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'industry' => ['required', 'string', 'max:255'],
-        'slogan' => ['required', 'string', 'max:255'],
-        'description' => ['required', 'string'],
-        'logo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // Validate the logo field
-    ]);
-
-    // Handle file upload
-    if ($request->hasFile('logo')) {
-        $image = $request->file('logo');
-        $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('images'), $imageName);
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'industry' => ['required', 'string', 'max:255'],
+            'slogan' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'logo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif'], // Validate the logo field
+        ]);
+    
+        // Handle file upload
+        if ($request->hasFile('logo')) {
+            $image = $request->file('logo');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+        }
+    
+        // Recherchez si l'entreprise existe déjà
+        $company = Company::where('user_id', auth()->user()->id)->first();
+    
+        // Mettre à jour ou créer une nouvelle entreprise
+        if ($company) {
+            $company->update([
+                'name' => $request->name,
+                'industry' => $request->industry,
+                'slogan' => $request->slogan,
+                'description' => $request->description,
+                'logo' => $imageName ?? null, // Use the uploaded image name if available
+            ]);
+        } else {
+            $company = new Company([
+                'user_id' => auth()->user()->id,
+                'name' => $request->name,
+                'industry' => $request->industry,
+                'slogan' => $request->slogan,
+                'description' => $request->description,
+                'logo' => $imageName ?? null, // Use the uploaded image name if available
+            ]);
+            $company->save();
+        }
+    
+        return redirect()->route('profile')->with('success', 'Profil complété avec succès !');
     }
-
-    // Create and save the company profile
-    $companyProfile = new Company();
-    $companyProfile->user_id = auth()->user()->id;
-    $companyProfile->name = $request->name;
-    $companyProfile->industry = $request->industry;
-    $companyProfile->slogan = $request->slogan;
-    $companyProfile->description = $request->description;
-    $companyProfile->logo = $imageName ?? null; // Use the uploaded image name if available
-    $companyProfile->save();
-
-    return redirect()->route('profile')->with('success', 'Profil complété avec succès !');
-}
 
     public function index()
     {

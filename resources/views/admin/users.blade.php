@@ -41,7 +41,7 @@
             <div class="flex flex-col items-center pb-10">
                 <!-- You can replace the image and user details with actual user data -->
                 <img class="w-24 h-24 mb-3 rounded-full shadow-lg"
-                    src="" alt="Logo de {{ $user->name }} " />
+                    src="{{ $user->photo }}" alt="photo de {{ $user->name }} " />
                 <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ $user->name }}</h5>
                 <span class="text-sm text-gray-500 dark:text-gray-400">{{ $user->role }}</span>
                 <div class="flex mt-4 md:mt-6">
