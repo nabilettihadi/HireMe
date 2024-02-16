@@ -15,37 +15,37 @@ class CompanyController extends Controller
     {
         return view('companies.profile');
     }
+
     public function dashboard()
     {
         return view('companies.dashboard');
     }
-    public function showProfileForm()
+
+    public function store(Request $request)
 {
-    return view('companies.profileforme');
-}
-    public function companyProfile(Request $request)
-{
-    $validatedData = $request->validate([
-        'name' => 'required|string',
-        'industry' => 'required|string',
-        'slogan' => 'required|string',
-        'description' => 'required|string',
-        'logo' => 'required|image',
+    $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'industry' => ['required', 'string', 'max:255'],
+        'slogan' => ['required', 'string', 'max:255'],
+        'description' => ['required', 'string'],
+        'logo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], // Validate the logo field
     ]);
+
+    // Handle file upload
     if ($request->hasFile('logo')) {
-        $image = request()->file('logo');
-        $imageName = time() . '.' .$image->getClientOriginalExtension();
+        $image = $request->file('logo');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('images'), $imageName);
     }
 
+    // Create and save the company profile
     $companyProfile = new Company();
-    $companyProfile->user_id = auth()->user()->id; 
-    $companyProfile->name = $validatedData['name'];
-    $companyProfile->industry = $validatedData['industry'];
-    $companyProfile->slogan = $validatedData['slogan'];
-    $companyProfile->description = $validatedData['description'];
-    $companyProfile->logo = $imageName;
-
+    $companyProfile->user_id = auth()->user()->id;
+    $companyProfile->name = $request->name;
+    $companyProfile->industry = $request->industry;
+    $companyProfile->slogan = $request->slogan;
+    $companyProfile->description = $request->description;
+    $companyProfile->logo = $imageName ?? null; // Use the uploaded image name if available
     $companyProfile->save();
 
     return redirect()->route('profile')->with('success', 'Profil complété avec succès !');
@@ -98,4 +98,5 @@ class CompanyController extends Controller
         return view('companies.applications', ['company' => $company, 'applications' => $applications]);
     }
 }
+
 

@@ -8,14 +8,14 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100 dark:bg-gray-900">
+<body class="bg-gradient-to-br from-blue-500 to-indigo-600">
     <div class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
             <div class="text-center">
-                <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white">
+                <h2 class="text-3xl font-extrabold text-white">
                     Register
                 </h2>
-                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Create an account to get started</p>
+                <p class="mt-2 text-sm text-gray-200">Create an account to get started</p>
             </div>
         </div>
 
@@ -85,9 +85,3 @@
 </body>
 
 </html>
-
-
-
-
-
-

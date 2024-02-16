@@ -2,14 +2,14 @@
 
 @section('content')
     <div class="container">
-        <h1>Job Offers</h1>
+        <h1>Offres d'emploi</h1>
         <table class="table">
             <thead>
                 <tr>
                     <th>Entreprise</th>
                     <th>Titre</th>
                     <th>Type de contrat</th>
-                    <!-- Autres colonnes si nécessaire -->
+                    <!-- Ajoutez d'autres colonnes si nécessaire -->
                 </tr>
             </thead>
             <tbody>
@@ -18,7 +18,7 @@
                     <td>{{ $jobOffer->company->name }}</td>
                     <td>{{ $jobOffer->title }}</td>
                     <td>{{ $jobOffer->contract_type }}</td>
-                    <!-- Autres données de l'offre d'emploi si nécessaire -->
+                    <!-- Ajoutez d'autres données sur l'offre d'emploi si nécessaire -->
                 </tr>
                 @endforeach
             </tbody>

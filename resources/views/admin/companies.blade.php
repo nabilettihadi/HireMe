@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Companies</h1>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            @foreach ($Companies as $company)
+            @foreach ($companies as $company)
                 <!-- Card for each company -->
                 <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex justify-end px-4 pt-4">
@@ -59,4 +59,5 @@
         {{ $companies->links() }}
     </div>
 @endsection
+
 

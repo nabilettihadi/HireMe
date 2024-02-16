@@ -50,7 +50,7 @@ class RegisteredUserController extends Controller
             ]);
             Company::create([
                 'user_id' => $user->id,
-                // Add other fields if needed
+                'name' => $request->name,
             ]);
             // Redirect company to their specific dashboard
             return redirect()->route('companies.dashboard');
@@ -82,7 +82,7 @@ class RegisteredUserController extends Controller
                 // Add other fields if needed
             ]);
             // Redirect user to their specific dashboard
-            return redirect()->route('users.dashboard');
+            return redirect()->route('users.profile');
         }
     }
 }

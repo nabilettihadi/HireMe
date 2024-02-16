@@ -3,72 +3,70 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-
-use App\Models\Admin;
-use App\Models\Company;
+use App\Models\UserProfile;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-use App\Models\User;
-use App\Models\UserProfile;
-use Illuminate\Support\Facades\DB;
+
 class ProfileController extends Controller
 {
+    /**
+     * Complete user profile.
+     */
+    public function completeProfile(Request $request)
+    {
+        // Validation des données
+        $validatedData = $request->validate([
+            'title' => 'required|string',
+            'current_position' => 'required|string',
+            'industry' => 'required|string',
+            'address' => 'required|string',
+            'contact_information' => 'required|string',
+            'about' => 'required|string',
+            'photo' => 'required|image',
+        ]);
 
+        // Enregistrement de la photo
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+        }
 
-public function completeProfile(Request $request)
-{
-    // Validation des données
-    $validatedData = $request->validate([
-        'title' => 'required|string',
-        'current_position' => 'required|string',
-        'industry' => 'required|string',
-        'address' => 'required|string',
-        'contact_information' => 'required|string',
-        'about' => 'required|string',
-        'photo' => 'required|image',
-    ]);
+        // Rechercher le profil utilisateur existant
+        $userProfile = UserProfile::where('user_id', auth()->user()->id)->first();
 
-    // Enregistrement de la photo
-    if ($request->hasFile('photo')) {
-        $image = $request->file('photo');
-        $imageName = time() . '.' .$image->getClientOriginalExtension();
-        $image->move(public_path('images'), $imageName);
+        // Mettre à jour ou créer un nouveau profil utilisateur
+        if ($userProfile) {
+            $userProfile->update([
+                'title' => $validatedData['title'],
+                'current_position' => $validatedData['current_position'],
+                'industry' => $validatedData['industry'],
+                'address' => $validatedData['address'],
+                'contact_information' => $validatedData['contact_information'],
+                'about' => $validatedData['about'],
+                'photo' => $imageName,
+            ]);
+        } else {
+            $userProfile = new UserProfile([
+                'user_id' => auth()->user()->id,
+                'title' => $validatedData['title'],
+                'current_position' => $validatedData['current_position'],
+                'industry' => $validatedData['industry'],
+                'address' => $validatedData['address'],
+                'contact_information' => $validatedData['contact_information'],
+                'about' => $validatedData['about'],
+                'photo' => $imageName,
+            ]);
+            $userProfile->save();
+        }
+
+        // Redirection avec un message flash
+        return redirect()->route('users.dashboard')->with('success', 'Profil complété avec succès !');
     }
 
-    // Rechercher le profil utilisateur existant
-    $userProfile = UserProfile::where('user_id', auth()->user()->id)->first();
-
-    // Mettre à jour ou créer un nouveau profil utilisateur
-    if ($userProfile) {
-        $userProfile->update([
-            'title' => $validatedData['title'],
-            'current_position' => $validatedData['current_position'],
-            'industry' => $validatedData['industry'],
-            'address' => $validatedData['address'],
-            'contact_information' => $validatedData['contact_information'],
-            'about' => $validatedData['about'],
-            'photo' => $imageName,
-        ]);
-    } else {
-        $userProfile = new UserProfile([
-            'user_id' => auth()->user()->id,
-            'title' => $validatedData['title'],
-            'current_position' => $validatedData['current_position'],
-            'industry' => $validatedData['industry'],
-            'address' => $validatedData['address'],
-            'contact_information' => $validatedData['contact_information'],
-            'about' => $validatedData['about'],
-            'photo' => $imageName,
-        ]);
-        $userProfile->save();
-    }
-
-    // Redirection avec un message flash
-    return redirect()->route('users.dashboard')->with('success', 'Profil complété avec succès !');
-}
     /**
      * Display the user's profile form.
      */
@@ -77,12 +75,12 @@ public function completeProfile(Request $request)
         $user = $request->user();
 
         // Vérifier si l'utilisateur est un administrateur
-        if ($user instanceof Admin) {
+        if ($user->isAdmin()) {
             return view('admin.profile.edit', compact('user'));
         }
 
         // Vérifier si l'utilisateur est une entreprise
-        if ($user instanceof Company) {
+        if ($user->isCompany()) {
             return view('company.profile.edit', compact('user'));
         }
 
@@ -95,7 +93,29 @@ public function completeProfile(Request $request)
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = Auth::user();
+
+        $validatedData = $request->validated();
+
+        // Enregistrement de la photo
+        if ($request->hasFile('photo')) {
+            $image = $request->file('photo');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+            $validatedData['photo'] = $imageName;
+        }
+
+        // Rechercher le profil utilisateur existant
+        $userProfile = UserProfile::where('user_id', $user->id)->first();
+
+        // Mettre à jour ou créer un nouveau profil utilisateur
+        if ($userProfile) {
+            $userProfile->update($validatedData);
+        } else {
+            $userProfile = new UserProfile($validatedData);
+            $userProfile->user_id = $user->id;
+            $userProfile->save();
+        }
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;

@@ -15,6 +15,7 @@ class UserController extends Controller
     {
         return view('users.dashboard');
     }
+
     public function profile()
     {
         $user = auth()->user();
@@ -28,29 +29,30 @@ class UserController extends Controller
             return redirect()->route('login');
         }
     }
+
     public function index()
     {
         $users = User::all();
-        return view('users.index', ['users' => $users]);
+        return view('users.index', compact('users'));
     }
 
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return view('users.show', ['user' => $user]);
+        return view('users.show', compact('user'));
     }
 
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view('users.edit', ['user' => $user]);
+        return view('users.edit', compact('user'));
     }
 
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
         $user->update($request->all());
-        return redirect()->route('users.show', ['user' => $user->id]);
+        return redirect()->route('users.show', compact('user'));
     }
 
     public function applyJob(Request $request, $jobId)
@@ -115,4 +117,5 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Skill added successfully');
     }
 }
+
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Company;
 use App\Models\JobOffer;
 
 class AdminController extends Controller
@@ -22,27 +21,42 @@ class AdminController extends Controller
     }
 
     public function manageUsers()
-{
-    // Récupérer tous les utilisateurs avec le rôle "Utilisateur" et paginer les résultats
-    $users = User::where('role', 'Utilisateur')->paginate(10);
-    
-    // Afficher la vue avec la liste paginée des utilisateurs
-    return view('admin.users', compact('users'));
-}
+    {
+        try {
+            // Récupérer tous les utilisateurs avec le rôle "Utilisateur" et paginer les résultats
+            $users = User::where('role', 'Utilisateur')->paginate(10);
+        } catch (\Exception $e) {
+            // Gérer l'erreur de récupération des utilisateurs
+            return redirect()->back()->with('error', 'Une erreur est survenue lors de la récupération des utilisateurs.');
+        }
+
+        // Afficher la vue avec la liste paginée des utilisateurs
+        return view('admin.users', compact('users'));
+    }
 
     public function manageCompanies()
     {
-        // Récupérer toutes les entreprises avec pagination
-        $users = User::where('role', 'Entreprise')->paginate(10);
+        try {
+            // Récupérer toutes les entreprises avec pagination
+            $companies = User::where('role', 'Entreprise')->paginate(10);
+        } catch (\Exception $e) {
+            // Gérer l'erreur de récupération des entreprises
+            return redirect()->back()->with('error', 'Une erreur est survenue lors de la récupération des entreprises.');
+        }
         
         // Afficher la vue avec la liste paginée des entreprises
-        return view('admin.companies', compact('users'));
+        return view('admin.companies', compact('companies'));
     }
 
     public function manageJobs()
     {
-        // Récupérer toutes les offres d'emploi avec pagination
-        $jobs = JobOffer::paginate(10);
+        try {
+            // Récupérer toutes les offres d'emploi avec pagination
+            $jobs = JobOffer::paginate(10);
+        } catch (\Exception $e) {
+            // Gérer l'erreur de récupération des offres d'emploi
+            return redirect()->back()->with('error', 'Une erreur est survenue lors de la récupération des offres d\'emploi.');
+        }
         
         // Afficher la vue avec la liste paginée des offres d'emploi
         return view('admin.job_offers', compact('jobs'));
@@ -50,11 +64,18 @@ class AdminController extends Controller
 
     public function viewStatistics()
     {
-        // Compter le nombre total d'utilisateurs avec le rôle "Utilisateur"
-        $totalUsers = User::where('role', 'Utilisateur')->count();
-        
-        // Compter le nombre total d'entreprises avec le rôle "Entreprise"
-        $totalCompanies = User::where('role', 'Entreprise')->count();
-        return view('admin.statistics', compact('totalUsers', 'totalCompanies')); // Passer $totalCompanies à la vue
+        try {
+            // Compter le nombre total d'utilisateurs avec le rôle "Utilisateur"
+            $totalUsers = User::where('role', 'Utilisateur')->count();
+            
+            // Compter le nombre total d'entreprises avec le rôle "Entreprise"
+            $totalCompanies = User::where('role', 'Entreprise')->count();
+        } catch (\Exception $e) {
+            // Gérer l'erreur de comptage des utilisateurs et des entreprises
+            return redirect()->back()->with('error', 'Une erreur est survenue lors du calcul des statistiques.');
+        }
+
+        return view('admin.statistics', compact('totalUsers', 'totalCompanies'));
     }
 }
+

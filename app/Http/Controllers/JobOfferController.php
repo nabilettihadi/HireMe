@@ -25,36 +25,40 @@ class JobOfferController extends Controller
         return view('job_offers.show', compact('jobOffer'));
     }
 
-    function create()
-   {
-       return view('job_offers.create');
-   }
+    public function create()
+    {
+        return view('job_offers.create');
+    }
 
-   /**
-    * Stocke une nouvelle offre d'emploi dans la base de données.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\RedirectResponse
-    */
-    function store(Request $request)
-   {
-       // Validation des données du formulaire
-       $validatedData = $request->validate([
-           'title' => 'required|string|max:255',
-           'description' => 'required|string',
-           // Ajoutez ici d'autres règles de validation pour les champs de votre formulaire
-       ]);
+    /**
+     * Stocke une nouvelle offre d'emploi dans la base de données.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        // Validation des données du formulaire
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            // Ajoutez ici d'autres règles de validation pour les champs de votre formulaire
+        ]);
 
-       // Création de l'offre d'emploi dans la base de données
-       JobOffer::create($validatedData);
+        // Création de l'offre d'emploi dans la base de données
+        JobOffer::create($validatedData);
 
-       // Redirection avec un message de succès
-       return redirect()->route('job_offers.index')->with('success', 'L\'offre d\'emploi a été créée avec succès.');
-   }
-}
+        // Redirection avec un message de succès
+        return redirect()->route('job_offers.index')->with('success', 'L\'offre d\'emploi a été créée avec succès.');
+    }
 
-
-     function search(Request $request)
+    /**
+     * Recherche des offres d'emploi en fonction des critères spécifiés.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
+     */
+    public function search(Request $request): \Illuminate\View\View
     {
         // Récupérer les paramètres de recherche
         $title = $request->input('title');
@@ -63,30 +67,29 @@ class JobOfferController extends Controller
         $location = $request->input('location');
 
         // Commencer la requête de recherche
-        $jobs = JobOffer::query();
+        $jobOffers = JobOffer::query();
 
         // Appliquer les filtres de recherche
         if ($title) {
-            $jobs->where('title', 'like', '%' . $title . '%');
+            $jobOffers->where('title', 'like', '%' . $title . '%');
         }
 
         if ($skills) {
-            $jobs->where('skills', 'like', '%' . $skills . '%');
+            $jobOffers->where('skills', 'like', '%' . $skills . '%');
         }
 
         if ($contractType) {
-            $jobs->where('contract_type', $contractType);
+            $jobOffers->where('contract_type', $contractType);
         }
 
         if ($location) {
-            $jobs->where('location', 'like', '%' . $location . '%');
+            $jobOffers->where('location', 'like', '%' . $location . '%');
         }
 
-        // Exécuter la requête et récupérer les résultats
-        $results = $jobs->paginate(10);
+        // Exécuter la requête et récupérer les résultats paginés
+        $results = $jobOffers->paginate(10);
 
         // Retourner les résultats de la recherche à la vue
         return view('jobs.search', ['results' => $results]);
     }
-
-
+}

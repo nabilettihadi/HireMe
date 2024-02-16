@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class SkillController extends Controller
 {
+    /**
+     * Display a listing of the skills.
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
     public function index()
     {
         // Récupérer toutes les compétences avec pagination
@@ -16,6 +21,12 @@ class SkillController extends Controller
         return view('skills.index', compact('skills'));
     }
 
+    /**
+     * Display the specified skill.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Contracts\View\View
+     */
     public function show($id)
     {
         // Récupérer la compétence avec l'identifiant $id
@@ -25,3 +36,4 @@ class SkillController extends Controller
         return view('skills.show', compact('skill'));
     }
 }
+

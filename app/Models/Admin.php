@@ -16,6 +16,12 @@ class Admin extends Model
         'email',
         // Ajoutez d'autres attributs si nécessaire
     ];
+    
+    /**
+     * Détermine si l'utilisateur est un administrateur.
+     *
+     * @return bool
+     */
     public function isAdmin()
     {
         return $this->role === 'Administrateur';

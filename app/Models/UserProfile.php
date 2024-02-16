@@ -19,9 +19,14 @@ class UserProfile extends Model
         'photo',
         'user_id',
     ];
-    
-    public function user() {
+
+    /**
+     * Définit la relation avec l'utilisateur.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-
 }

@@ -16,8 +16,13 @@ class ApplicationController extends Controller
 
     public function index()
     {
-        // Récupérer toutes les candidatures avec pagination
-        $applications = Application::paginate(10);
+        try {
+            // Récupérer toutes les candidatures avec pagination
+            $applications = Application::paginate(10);
+        } catch (\Exception $e) {
+            // Gérer l'erreur de récupération des candidatures
+            return redirect()->back()->with('error', 'Une erreur est survenue lors de la récupération des candidatures.');
+        }
         
         // Afficher la vue avec la liste paginée des candidatures
         return view('applications.index', compact('applications'));
@@ -25,8 +30,13 @@ class ApplicationController extends Controller
 
     public function show($id)
     {
-        // Récupérer la candidature avec l'identifiant $id
-        $application = Application::findOrFail($id);
+        try {
+            // Récupérer la candidature avec l'identifiant $id
+            $application = Application::findOrFail($id);
+        } catch (\Exception $e) {
+            // Gérer l'erreur de récupération de la candidature
+            return redirect()->back()->with('error', 'Candidature non trouvée.');
+        }
         
         // Afficher la vue avec les détails de la candidature
         return view('applications.show', compact('application'));
@@ -52,24 +62,31 @@ class ApplicationController extends Controller
         }
 
         // Créer une nouvelle candidature
-        $application = new Application();
-        $application->user_id = $user->id;
-        $application->job_id = $jobId;
-        // Vous pouvez ajouter d'autres champs ici en fonction de votre modèle Application
-
-        // Enregistrer la candidature dans la base de données
-        $application->save();
+        try {
+            $application = new Application();
+            $application->user_id = $user->id;
+            $application->job_id = $jobId;
+            // Vous pouvez ajouter d'autres champs ici en fonction de votre modèle Application
+            $application->save();
+        } catch (\Exception $e) {
+            // Gérer l'erreur de création de la candidature
+            return response()->json(['message' => 'Failed to submit application'], 500);
+        }
 
         return response()->json(['message' => 'Application submitted successfully'], 200);
     }
 
     public function viewApplications($userId)
     {
-        // Récupérer les candidatures de l'utilisateur avec l'identifiant $userId
-        $applications = Application::where('user_id', $userId)->paginate(10);
+        try {
+            // Récupérer les candidatures de l'utilisateur avec l'identifiant $userId
+            $applications = Application::where('user_id', $userId)->paginate(10);
+        } catch (\Exception $e) {
+            // Gérer l'erreur de récupération des candidatures
+            return response()->json(['message' => 'Failed to retrieve applications'], 500);
+        }
 
         // Retourner les candidatures sous forme de réponse JSON paginée
         return response()->json(['applications' => $applications], 200);
     }
 }
-

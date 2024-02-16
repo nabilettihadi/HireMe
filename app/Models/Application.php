@@ -15,7 +15,11 @@ class Application extends Model
         // Ajoutez d'autres attributs si nécessaire
     ];
 
-    // Définissez la relation avec le modèle User
+    /**
+     * Définit la relation avec le modèle User.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class);

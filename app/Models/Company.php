@@ -4,24 +4,33 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Auth\Authenticatable as AuthenticableTrait;
-
-class Company extends Model implements Authenticatable
+class Company extends Authenticatable
 {
-    use AuthenticableTrait;
-    use HasFactory; 
+    use HasFactory;
 
     protected $fillable = [
         'name', 'logo', 'slogan', 'industry', 'description',
     ];
 
-    public function jobOffers() {
+    /**
+     * Définit la relation avec les offres d'emploi.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function jobOffers()
+    {
         return $this->hasMany(JobOffer::class);
     }
 
-    public function user() {
+    /**
+     * Définit la relation avec l'utilisateur associé à l'entreprise.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }
