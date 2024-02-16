@@ -35,7 +35,16 @@ class AdminController extends Controller
     
         return view('admin.users', compact('users'));
     }
-
+    public function archiveUser($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            return redirect()->back()->with('success', 'Utilisateur archivé avec succès.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'archivage de l\'utilisateur.');
+        }
+    }
     public function manageCompanies()
     {
         try {

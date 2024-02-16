@@ -20,7 +20,10 @@ class CompanyController extends Controller
     {
         return view('companies.dashboard');
     }
-
+    public function showProfileForm()
+{
+    return view('companies.profileforme');
+}
     public function store(Request $request)
     {
         $request->validate([

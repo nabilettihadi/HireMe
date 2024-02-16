@@ -7,6 +7,13 @@
     <title>User Dashboard</title>
     <!-- Intégration de Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Style pour les liens lorsqu'ils sont survolés */
+        a:hover {
+            color: #4F46E5; /* Changement de couleur lors du survol */
+            transition: color 0.3s ease; /* Animation de transition fluide */
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
@@ -20,21 +27,21 @@
             </div>
             <!-- Liens de navigation -->
             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                <a href="{{ route('users.profile') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900">Profile</a>
-                <a href="{{ route('job_offers.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900">Search Jobs</a>
-                <a href="{{ route('companies.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900">Search Companies</a>
+                <a href="{{ route('users.profile') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-indigo-500">Profile</a>
+                <a href="{{ route('job_offers.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-indigo-500">Search Jobs</a>
+                <a href="{{ route('companies.index') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-indigo-500">Search Companies</a>
             </div>
             <!-- Boutons d'actions utilisateur -->
             <div class="hidden sm:flex sm:items-center sm:ml-6 space-x-2">
                 @auth
-                    <a href="{{ route('profile.completeForm') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">Complete Profile</a>
+                    <a href="{{ route('profile.completeForm') }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100 hover:text-indigo-600">Complete Profile</a>
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Logout</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="text-gray-700">Log in</a>
-                    <a href="{{ route('register') }}" class="text-gray-700">Register</a>
+                    <a href="{{ route('login') }}" class="text-gray-700 hover:text-indigo-500">Log in</a>
+                    <a href="{{ route('register') }}" class="text-gray-700 hover:text-indigo-500">Register</a>
                 @endauth
             </div>
             <!-- Burger menu pour les écrans mobiles -->
@@ -53,9 +60,9 @@
         <!-- Menu pour les écrans mobiles -->
         <div class="sm:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="{{ route('users.profile') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Profile</a>
-                <a href="{{ route('job_offers.index') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Search Jobs</a>
-                <a href="{{ route('companies.index') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Search Companies</a>
+                <a href="{{ route('users.profile') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-indigo-500 hover:bg-gray-50">Profile</a>
+                <a href="{{ route('job_offers.index') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-indigo-500 hover:bg-gray-50">Search Jobs</a>
+                <a href="{{ route('companies.index') }}" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-indigo-500 hover:bg-gray-50">Search Companies</a>
             </div>
         </div>
     </nav>
@@ -114,4 +121,3 @@
 </body>
 
 </html>
-

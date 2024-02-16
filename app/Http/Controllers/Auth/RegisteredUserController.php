@@ -53,7 +53,7 @@ class RegisteredUserController extends Controller
                 'name' => $request->name,
             ]);
             // Redirect company to their specific dashboard
-            return redirect()->route('companies.dashboard');
+            return redirect()->route('companies.profileform');
         } elseif ($request->role === 'admin') {
             // Store user as admin
             $user = User::create([
@@ -82,7 +82,7 @@ class RegisteredUserController extends Controller
                 // Add other fields if needed
             ]);
             // Redirect user to their specific dashboard
-            return redirect()->route('users.profile');
+            return redirect()->route('profile.completeForm');
         }
     }
 }
