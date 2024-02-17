@@ -108,10 +108,7 @@
                     <i class="fas fa-user-circle fa-lg"></i>
                 </button>
             
-                @if(auth()->user()->company) <!-- Vérifier si l'utilisateur a une entreprise -->
-                    <!-- Image de profil -->
-                    <img src="{{ asset('images/' . auth()->user()->company->logo) }}" alt="Profile Image" class="hidden absolute top-full right-0 transform translate-x-1/2 -translate-y-1/2 bg-white border border-gray-300 shadow-lg rounded-full w-10 h-10">
-                @endif
+
             </div>
         </div>
     </div>

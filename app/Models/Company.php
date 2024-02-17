@@ -11,7 +11,7 @@ class Company extends Authenticatable
     use HasFactory;
 
     protected $fillable = [
-        'name', 'logo', 'slogan', 'industry', 'description',
+        'user_id','name', 'logo', 'slogan', 'industry', 'description',
     ];
 
     /**

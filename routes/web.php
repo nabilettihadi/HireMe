@@ -44,6 +44,8 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(
         Route::get('/companies', [AdminController::class, 'manageCompanies'])->name('manageCompanies');
         Route::get('/job_offers', [AdminController::class, 'manageJobs'])->name('manageJobs');
         Route::get('/statistics', [AdminController::class, 'viewStatistics'])->name('viewStatistics');
+        Route::delete('/users/{id}', [AdminController::class, 'archiveUser'])->name('archiveUser');
+
     });
 });
 

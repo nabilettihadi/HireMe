@@ -27,7 +27,7 @@ class AdminController extends Controller
             // Récupérer tous les utilisateurs avec le rôle "Utilisateur" et leurs profils associés
             $users = User::where('role', 'Utilisateur')
                 ->join('user_profiles', 'users.id', '=', 'user_profiles.user_id')
-                ->select('users.*', 'user_profiles.*')
+                ->select('users.id', 'users.name', 'users.role', 'user_profiles.photo')
                 ->paginate(10);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Une erreur est survenue lors de la récupération des utilisateurs.');
@@ -35,6 +35,7 @@ class AdminController extends Controller
     
         return view('admin.users', compact('users'));
     }
+    
     public function archiveUser($id)
     {
         try {
