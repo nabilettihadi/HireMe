@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <div class="container mx-auto py-8">
     <h1 class="text-3xl font-semibold mb-8">Liste des utilisateurs</h1>
 
