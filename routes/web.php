@@ -10,6 +10,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CVController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,25 +29,27 @@ Route::get('/', function () {
 });
 
 // Routes pour les utilisateurs
-Route::get('/users/dashboard', [UserController::class, 'dashboard'])->name('users.dashboard');
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::get('/users/profile', [UserController::class, 'profile'])->name('users.profile');
-Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+        Route::get('/{id}', [UserController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [UserController::class, 'update'])->name('update');
+        Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
+    });
+});
 
 // Routes pour l'administration
-Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
-    Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-        Route::get('/users', [AdminController::class, 'manageUsers'])->name('manageUsers');
-        Route::get('/companies', [AdminController::class, 'manageCompanies'])->name('manageCompanies');
-        Route::get('/job_offers', [AdminController::class, 'manageJobs'])->name('manageJobs');
-        Route::get('/statistics', [AdminController::class, 'viewStatistics'])->name('viewStatistics');
-        Route::delete('/users/{id}', [AdminController::class, 'archiveUser'])->name('archiveUser');
-
-    });
+Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/users', [AdminController::class, 'manageUsers'])->name('manageUsers');
+    Route::get('/companies', [AdminController::class, 'manageCompanies'])->name('manageCompanies');
+    Route::get('/job_offers', [AdminController::class, 'manageJobs'])->name('manageJobs');
+    Route::get('/statistics', [AdminController::class, 'viewStatistics'])->name('viewStatistics');
+    Route::delete('/users/{id}', [AdminController::class, 'archiveUser'])->name('archiveUser');
+    Route::delete('/companies/{id}', [AdminController::class, 'archiveCompany'])->name('archiveCompany');
 });
 
 // Routes pour les compétences
@@ -77,7 +80,6 @@ Route::prefix('companies')->name('companies.')->group(function () {
     Route::get('/', [CompanyController::class, 'index'])->name('index');
 });
 
-
 // Routes pour les offres d'emploi
 Route::prefix('job_offers')->name('job_offers.')->group(function () {
     Route::get('/', [JobOfferController::class, 'index'])->name('index');
@@ -95,22 +97,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-
-    // Routes pour le profil utilisateur
-    Route::prefix('profile')->name('profile.')->group(function () {
-        Route::get('/completeForm', function () {
-            return view('users.profile.completeForm');
-        })->name('completeForm');
-    
-        Route::post('/complete', [ProfileController::class, 'completeProfile'])->name('completeProfile'); // Ajout de la route POST pour la soumission du formulaire
-    
-        Route::get('/', [ProfileController::class, 'edit'])->name('edit');
-        Route::patch('/', [ProfileController::class, 'update'])->name('update');
-        Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
-    });
 });
-use App\Http\Controllers\CVController;
+// Routes pour le profil utilisateur
+Route::prefix('profile')->name('profile.')->group(function () {
+    Route::get('/completeForm', function () {
+        return view('users.profile.completeForm');
+    })->name('completeForm');
 
+    Route::post('/complete', [ProfileController::class, 'completeProfile'])->name('completeProfile'); // Ajout de la route POST pour la soumission du formulaire
+
+    Route::get('/', [ProfileController::class, 'edit'])->name('edit');
+    Route::patch('/', [ProfileController::class, 'update'])->name('update');
+    Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
+});
 // Route pour afficher la vue cv.blade.php
 Route::get('/cv', [CVController::class, 'show'])->name('cv.show');
 
@@ -118,4 +117,5 @@ Route::get('/cv', [CVController::class, 'show'])->name('cv.show');
 Route::get('/cv/download', [CVController::class, 'download'])->name('cv.download');
 
 Route::post('/cv/save', [CVController::class, 'save'])->name('cv.save');
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';

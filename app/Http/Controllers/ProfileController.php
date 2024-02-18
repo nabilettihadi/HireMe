@@ -9,63 +9,51 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-
+use Illuminate\Support\Facades\Session;
 class ProfileController extends Controller
 {
     /**
      * Complete user profile.
      */
     public function completeProfile(Request $request)
-    {
-        // Validation des données
-        $validatedData = $request->validate([
-            'title' => 'required|string',
-            'current_position' => 'required|string',
-            'industry' => 'required|string',
-            'address' => 'required|string',
-            'contact_information' => 'required|string',
-            'about' => 'required|string',
-            'photo' => 'required|image',
-        ]);
+{
+    // Validez les données de la requête
+    $validatedData = $request->validate([
+        'title' => 'required|string',
+        'current_position' => 'required|string',
+        'industry' => 'required|string',
+        'address' => 'required|string',
+        'contact_information' => 'required|string',
+        'about' => 'required|string',
+        'photo' => 'required|image',
+    ]);
 
-        // Enregistrement de la photo
-        if ($request->hasFile('photo')) {
-            $image = $request->file('photo');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-        }
-
-        // Rechercher le profil utilisateur existant
-        $userProfile = UserProfile::where('user_id', auth()->user()->id)->first();
-
-        // Mettre à jour ou créer un nouveau profil utilisateur
-        if ($userProfile) {
-            $userProfile->update([
-                'title' => $validatedData['title'],
-                'current_position' => $validatedData['current_position'],
-                'industry' => $validatedData['industry'],
-                'address' => $validatedData['address'],
-                'contact_information' => $validatedData['contact_information'],
-                'about' => $validatedData['about'],
-                'photo' => $imageName,
-            ]);
-        } else {
-            $userProfile = new UserProfile([
-                'user_id' => auth()->user()->id,
-                'title' => $validatedData['title'],
-                'current_position' => $validatedData['current_position'],
-                'industry' => $validatedData['industry'],
-                'address' => $validatedData['address'],
-                'contact_information' => $validatedData['contact_information'],
-                'about' => $validatedData['about'],
-                'photo' => $imageName,
-            ]);
-            $userProfile->save();
-        }
-
-        // Redirection avec un message flash
-        return redirect()->route('users.dashboard')->with('success', 'Profil complété avec succès !');
+    // Enregistrement de la photo
+    if ($request->hasFile('photo')) {
+        $image = $request->file('photo');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('images'), $imageName);
     }
+
+    
+    $userId = Session::get('user_id');
+    // Recherchez ou créez le profil utilisateur en fonction de l'ID de l'utilisateur
+    $userProfile = UserProfile::firstOrNew(['user_id' => $userId]);
+    
+    // Mise à jour ou création du profil utilisateur
+    $userProfile->user_id = $userId;
+    $userProfile->title = $validatedData['title'];
+    $userProfile->current_position = $validatedData['current_position'];
+    $userProfile->industry = $validatedData['industry'];
+    $userProfile->address = $validatedData['address'];
+    $userProfile->contact_information = $validatedData['contact_information'];
+    $userProfile->about = $validatedData['about'];
+    $userProfile->photo = $imageName ?? null; // Utilisez le nom de l'image si disponible
+
+    $userProfile->save();
+
+    return redirect()->route('users.dashboard')->with('success', 'Profil complété avec succès !');
+}
 
     /**
      * Display the user's profile form.

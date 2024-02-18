@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Company;
 use App\Models\UserProfile;
 use App\Models\JobOffer;
 
@@ -50,7 +51,9 @@ class AdminController extends Controller
     {
         try {
             // Récupérer toutes les entreprises avec pagination
-            $companies = User::where('role', 'Entreprise')->paginate(10);
+            $companies = Company::join('users', 'companies.user_id', '=', 'users.id')
+                            ->where('users.role', 'Entreprise')->select('users.id', 'users.name', 'users.role', 'companies.logo')
+                            ->paginate(10);
         } catch (\Exception $e) {
             // Gérer l'erreur de récupération des entreprises
             return redirect()->back()->with('error', 'Une erreur est survenue lors de la récupération des entreprises.');
@@ -59,7 +62,16 @@ class AdminController extends Controller
         // Afficher la vue avec la liste paginée des entreprises
         return view('admin.companies', compact('companies'));
     }
-
+    public function archiveCompany($id)
+    {
+        try {
+            $company = Company::findOrFail($id);
+            $company->delete();
+            return redirect()->back()->with('success', 'Entreprise archivée avec succès.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'archivage de l\'entreprise.');
+        }
+    }
     public function manageJobs()
     {
         try {
