@@ -52,6 +52,7 @@ class RegisteredUserController extends Controller
                 'user_id' => $user->id,
                 'name' => $request->name,
             ]);
+            Session::put('user_id', $user->id);
             // Redirect company to their specific dashboard
             return redirect()->route('companies.profileform');
         } elseif ($request->role === 'admin') {
