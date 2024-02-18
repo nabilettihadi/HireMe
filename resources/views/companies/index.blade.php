@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 @section('content')
     <div class="container">
         <h1 class="text-2xl font-semibold text-gray-900 mb-6">Liste des Entreprises</h1>
@@ -9,6 +9,8 @@
                     <div class="px-4 py-5 sm:p-6">
                         <h2 class="text-lg font-medium text-gray-900">{{ $company->name }}</h2>
                         <p class="mt-2 text-sm text-gray-600">Industrie: {{ $company->industry }}</p>
+                        <p class="mt-2 text-sm text-gray-600">Slogan: {{ $company->Slogan }}</p>
+                        <p class="mt-2 text-sm text-gray-600">Description: {{ $company->Description }}</p>
                         <!-- Ajoutez d'autres informations de l'entreprise ici si nécessaire -->
                         <div class="mt-4">
                             <a href="{{ route('companies.show', $company->id) }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Voir</a>

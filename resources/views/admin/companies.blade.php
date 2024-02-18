@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 @section('content')
     <div class="container">
         <h1>Companies</h1>
@@ -44,18 +44,17 @@
                              src="{{ asset('images/' .$company->logo) }}" alt="Logo de {{ $company->name }}"/>
                         <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ $company->name }}</h5>
                         <span class="text-sm text-gray-500 dark:text-gray-400">{{ $company->industry }}</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ $company->Slogan }}</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ $company->Description }}</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ $company->industry }}</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{{ $company->industry }}</span>
                         <div class="flex mt-4 md:mt-6">
                             <form action="{{ route('admin.archiveCompany', ['id' => $company->id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit">Archiver</button>
+                                <button type="submit" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Archiver</button>
                             </form>
                             
-                            <a href="#"
-                               class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add
-                                friend</a>
-                            <a href="#"
-                               class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700 ms-3">Message</a>
                         </div>
                     </div>
                 </div>
