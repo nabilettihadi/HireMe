@@ -49,7 +49,16 @@
                 </div>
                 <form method="POST" action="{{ route('register') }}" class="mt-8 space-y-6">
                     @csrf
-
+<!-- Role -->
+<div class="space-y-2">
+    <label for="role" class="block text-sm font-medium text-gray-700 dark:text-gray-300">I am:</label>
+    <div class="flex items-center space-x-4">
+        <input type="radio" id="role_user" name="role" value="user" checked class="mr-2 text-indigo-600 focus:ring-indigo-500 dark:text-indigo-400 dark:focus:ring-indigo-400">
+        <label for="role_user" class="text-sm font-medium text-gray-700 dark:text-gray-300">Standard User</label>
+        <input type="radio" id="role_company" name="role" value="company" class="mr-2 text-indigo-600 focus:ring-indigo-500 dark:text-indigo-400 dark:focus:ring-indigo-400">
+        <label for="role_company" class="text-sm font-medium text-gray-700 dark:text-gray-300">Company</label>
+    </div>
+</div>
                     <!-- Name -->
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
