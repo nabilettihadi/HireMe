@@ -12,26 +12,35 @@
             background-size: cover;
             background-position: center;
         }
+
         .overlay {
             background-color: rgba(0, 0, 0, 0.5);
         }
+
         .bg-form {
             background-color: rgba(255, 255, 255, 0.8);
         }
+
         .form-container {
-            max-width: 600px; /* Ajustez la largeur maximale selon vos préférences */
-            width: 90%; /* Largeur du formulaire */
+            max-width: 600px;
+            /* Ajustez la largeur maximale selon vos préférences */
+            width: 90%;
+            /* Largeur du formulaire */
             padding: 2rem;
             border-radius: 10px;
         }
+
         .form-container input[type="text"],
         .form-container input[type="email"],
         .form-container input[type="password"] {
             width: 100%;
-            padding: 1rem; /* Augmentez la hauteur des champs */
-            margin-top: 1rem; /* Augmentez l'espace entre les champs */
+            padding: 1rem;
+            /* Augmentez la hauteur des champs */
+            margin-top: 1rem;
+            /* Augmentez l'espace entre les champs */
             border-radius: 5px;
-            border: 1px solid #d1d5db; /* Couleur de la bordure */
+            border: 1px solid #d1d5db;
+            /* Couleur de la bordure */
             transition: border-color 0.2s ease-in-out;
         }
     </style>
@@ -40,7 +49,8 @@
 <body class="bg-gradient-to-br from-blue-500 to-indigo-600">
     <div class="min-h-screen flex justify-center items-center bg-container">
         <div class="overlay min-h-screen w-full flex justify-center items-center">
-            <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10 overflow-hidden bg-form form-container">
+            <div
+                class="bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10 overflow-hidden bg-form form-container">
                 <div class="text-center">
                     <h2 class="text-3xl font-extrabold text-gray-800 dark:text-white">
                         Register
@@ -49,19 +59,25 @@
                 </div>
                 <form method="POST" action="{{ route('register') }}" class="mt-8 space-y-6">
                     @csrf
-<!-- Role -->
-<div class="space-y-2">
-    <label for="role" class="block text-sm font-medium text-gray-700 dark:text-gray-300">I am:</label>
-    <div class="flex items-center space-x-4">
-        <input type="radio" id="role_user" name="role" value="user" checked class="mr-2 text-indigo-600 focus:ring-indigo-500 dark:text-indigo-400 dark:focus:ring-indigo-400">
-        <label for="role_user" class="text-sm font-medium text-gray-700 dark:text-gray-300">Standard User</label>
-        <input type="radio" id="role_company" name="role" value="company" class="mr-2 text-indigo-600 focus:ring-indigo-500 dark:text-indigo-400 dark:focus:ring-indigo-400">
-        <label for="role_company" class="text-sm font-medium text-gray-700 dark:text-gray-300">Company</label>
-    </div>
-</div>
+                    <!-- Role -->
+                    <div class="space-y-2">
+                        <label for="role" class="block text-sm font-medium text-gray-700 dark:text-gray-300">I
+                            am:</label>
+                        <div class="flex items-center space-x-4">
+                            <input type="radio" id="role_user" name="role" value="user" checked
+                                class="mr-2 text-indigo-600 focus:ring-indigo-500 dark:text-indigo-400 dark:focus:ring-indigo-400">
+                            <label for="role_user" class="text-sm font-medium text-gray-700 dark:text-gray-300">Standard
+                                User</label>
+                            <input type="radio" id="role_company" name="role" value="company"
+                                class="mr-2 text-indigo-600 focus:ring-indigo-500 dark:text-indigo-400 dark:focus:ring-indigo-400">
+                            <label for="role_company"
+                                class="text-sm font-medium text-gray-700 dark:text-gray-300">Company</label>
+                        </div>
+                    </div>
                     <!-- Name -->
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+                        <label for="name"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
                         <input id="name" name="name" type="text" autocomplete="name" required
                             class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
@@ -76,14 +92,16 @@
 
                     <!-- Password -->
                     <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+                        <label for="password"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
                         <input id="password" name="password" type="password" autocomplete="new-password" required
                             class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
 
                     <!-- Confirm Password -->
                     <div>
-                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm Password</label>
+                        <label for="password_confirmation"
+                            class="block text-sm font-medium text-gray-700 dark:text-gray-300">Confirm Password</label>
                         <input id="password_confirmation" name="password_confirmation" type="password"
                             autocomplete="new-password" required
                             class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
