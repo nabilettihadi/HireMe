@@ -15,6 +15,16 @@ class JobOfferController extends Controller
         // Afficher la vue avec la liste paginée des offres d'emploi
         return view('job_offers.index', compact('jobOffers'));
     }
+    public function jobOffersForCompany()
+{
+    // Récupérer l'utilisateur connecté
+    $user = auth()->user()->company->id;
+    
+    // Récupérer les offres d'emploi de l'utilisateur connecté
+    $jobOffers = $user->jobOffers; // jobOffers est la relation définie dans votre modèle User
+    
+    return view('job_offers.index', ['jobOffers' => $jobOffers]);
+}
 
     public function show($id)
     {

@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use App\Models\JobOffer;
 use Illuminate\Http\Request;
 use App\Models\Company;
-use App\Models\Job;
 use App\Models\Application;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -106,22 +105,22 @@ public function store(Request $request)
     $company = Company::findOrFail($companyId);
     
     // Validation des données du formulaire
-    $request->validate([
+    $validatedData = $request->validate([
         'title' => 'required|string|max:255',
         'description' => 'required|string',
-        'required_skills' => 'required|array',
-        'contract_type' => 'required|in:à distance,hybride,à temps plein',
+        'required_skills' => 'required|string', // Modifiez selon vos besoins
+        'contract_type' => 'required|string', // Modifiez selon vos besoins
         'location' => 'required|string',
         // Ajoutez ici d'autres règles de validation pour les champs de votre formulaire
     ]);
     
     // Création de l'offre d'emploi
     $job = new JobOffer([
-        'title' => $request->title,
-        'description' => $request->description,
-        'required_skills' => $request->required_skills,
-        'contract_type' => $request->contract_type,
-        'location' => $request->location,
+        'title' => $validatedData['title'],
+        'description' => $validatedData['description'],
+        'required_skills' => json_encode($validatedData['required_skills']),
+        'contract_type' => $validatedData['contract_type'],
+        'location' => $validatedData['location'],
     ]);
     
     // Association de l'offre d'emploi à l'entreprise
@@ -129,6 +128,28 @@ public function store(Request $request)
     
     // Redirection avec un message de succès
     return redirect()->route('companies.dashboard')->with('success', 'L\'offre d\'emploi a été publiée avec succès.');
+}
+
+
+public function jobOffersForCompany()
+{
+    // Récupérer l'utilisateur connecté
+    $user = auth()->user();
+
+    // Récupérer l'entreprise de l'utilisateur connecté
+    $company = $user->company;
+
+    // Vérifier si l'entreprise existe pour éviter les erreurs potentielles
+    if ($company) {
+        // Récupérer les offres d'emploi de l'entreprise
+        $jobOffers = $company->jobOffers; // jobOffers est la relation définie dans votre modèle Company
+
+        return view('job_offers.index', ['jobOffers' => $jobOffers]);
+    } else {
+        // Gérer le cas où l'entreprise n'existe pas
+        // Par exemple, rediriger l'utilisateur vers une page d'erreur
+        return redirect()->route('error');
+    }
 }
 
 
