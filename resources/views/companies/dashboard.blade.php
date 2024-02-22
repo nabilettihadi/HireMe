@@ -9,7 +9,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
     <style>
-        /* Custom styles */
+        /* Styles personnalisés */
+
+        /* Styles du corps et de la barre de navigation */
         body {
             font-family: Arial, sans-serif;
             background-color: #f3f2ef; /* Couleur de fond */
@@ -31,7 +33,7 @@
             color: #333333; /* Couleur de l'icône de profil */
         }
 
-        /* Contenu principal */
+        /* Styles du contenu principal */
         main {
             padding: 20px;
         }
@@ -76,7 +78,7 @@
             background-color: #005c8d; /* Couleur du bouton au survol */
         }
 
-        /* Footer */
+        /* Styles du pied de page */
         footer {
             background-color: #333333; /* Couleur de fond du pied de page */
             color: #ffffff; /* Couleur du texte du pied de page */
@@ -93,8 +95,8 @@
         <h1 class="text-lg font-bold text-gray-800">HireMe</h1>
         <ul id="menu" class="hidden lg:flex space-x-4">
             <li><a href="#profil" class="text-gray-800 hover:text-blue-600">Profil</a></li>
-            <li><a href="#offres" class="text-gray-800 hover:text-blue-600">Offres d'emploi</a></li>
-            <li><a href="#candidatures" class="text-gray-800 hover:text-blue-600">Candidatures</a></li>
+            <li><a href={{ route('job_offers.index') }} class="text-gray-800 hover:text-blue-600">Offres d'emploi</a></li> <!-- Lien vers les offres d'emploi -->
+            <li><a href="{{ route('applications.index') }}" class="text-gray-800 hover:text-blue-600">Candidatures</a></li> <!-- Lien vers les candidatures -->
             <li><a href="#statistiques" class="text-gray-800 hover:text-blue-600">Statistiques</a></li>
         </ul>
         <div class="flex items-center space-x-4">
@@ -123,6 +125,9 @@
 
 <main class="container mx-auto">
 
+    <div class="text-center mt-4">
+        <a href="{{ route('companies.showPublishJobForm', ['companyId' => auth()->user()->company->id]) }}" class="text-blue-600 hover:underline">Créer une offre d'emploi</a>
+    </div>
     <!-- Contenu principal -->
 
     <div class="card max-w-2xl mx-auto">
@@ -139,6 +144,10 @@
         <div class="text-center mt-2">
             <h2 class="font-semibold">{{ auth()->user()->name }}</h2> <!-- Afficher le nom de l'utilisateur connecté -->
             <p class="text-gray-500">{{ auth()->user()->role }}</p> <!-- Afficher le rôle de l'utilisateur connecté -->
+            <p class="text-gray-500">{{ auth()->user()->company->slogan }}</p> <!-- Afficher le rôle de l'utilisateur connecté -->
+            <p class="text-gray-500">{{ auth()->user()->company->industry }}</p> <!-- Afficher le rôle de l'utilisateur connecté -->
+            <p class="text-gray-500">{{ auth()->user()->company->description }}</p> <!-- Afficher le rôle de l'utilisateur connecté -->
+            <p class="text-gray-500">{{ auth()->user()->company->created_at }}</p> <!-- Afficher le rôle de l'utilisateur connecté -->
         </div>
         <ul class="py-4 mt-2 text-gray-700 flex items-center justify-around">
             <li class="flex flex-col items-center justify-around">
@@ -183,7 +192,7 @@
     </div>
 </footer>
 
-
+<!-- Script JavaScript -->
 <script>
     const profileToggle = document.getElementById('profile-toggle');
     const profileDropdown = document.getElementById('dropdown-menu');
@@ -206,4 +215,3 @@
 
 </body>
 </html>
-

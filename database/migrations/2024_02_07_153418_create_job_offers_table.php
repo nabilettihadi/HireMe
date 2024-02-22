@@ -15,7 +15,7 @@ class CreateJobOffersTable extends Migration
             $table->text('description');
             $table->json('required_skills');
             $table->integer('visit_count')->default(0);
-            $table->enum('employment_type', ['à distance', 'hybride', 'à temps plein']);
+            $table->enum('contract_type', ['à distance', 'hybride', 'à temps plein']);
             $table->string('location');
             $table->timestamps();
         });
@@ -25,4 +25,5 @@ class CreateJobOffersTable extends Migration
     {
         Schema::dropIfExists('job_offers');
     }
+    
 }

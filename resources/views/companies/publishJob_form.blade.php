@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Publier une offre d'emploi</h1>
 
-        <form action="{{ route('company.publishJob', $company->id) }}" method="POST">
+        <form action="{{ route('job_offers.store', ['companyId' => $company->id]) }}" method="POST">
             @csrf
 
             <div class="form-group">
@@ -19,7 +19,7 @@
 
             <div class="form-group">
                 <label for="skills">Compétences Requises</label>
-                <input type="text" name="skills" id="skills" class="form-control" required>
+                <input type="text" name="required_skills" id="skills" class="form-control" required>
             </div>
 
             <div class="form-group">

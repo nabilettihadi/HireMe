@@ -8,6 +8,26 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-semibold">Admin Dashboard</h1>
+            <div>
+                <a href="#" class="hover:text-gray-300 mr-4">Dashboard</a>
+                <a href="#" class="hover:text-gray-300 mr-4">Users</a>
+                <a href="#" class="hover:text-gray-300 mr-4">Companies</a>
+                <a href="#" class="hover:text-gray-300 mr-4">Jobs</a>
+                <a href="#" class="hover:text-gray-300 mr-4">Statistics</a>
+                <a href="{{ route('logout') }}" class="hover:text-gray-300" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- Main Content -->
     <div class="container mx-auto py-8">
         <h1 class="text-3xl font-semibold mb-8">Tableau de bord de l'administrateur</h1>
 

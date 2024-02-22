@@ -68,6 +68,12 @@ Route::get('/educations/{id}', [EducationController::class, 'show'])->name('educ
 Route::get('/languages', [LanguageController::class, 'index'])->name('languages.index');
 Route::get('/languages/{id}', [LanguageController::class, 'show'])->name('languages.show');
 
+
+// Afficher le formulaire de publication d'offre d'emploi
+Route::get('/companies/{companyId}/publish-job', [CompanyController::class, 'showPublishJobForm'])->name('companies.showPublishJobForm');
+
+// Publier une offre d'emploi
+Route::post('/companies/{companyId}/publish-job', [CompanyController::class, 'publishJob'])->name('companies.publishJob');
 // Routes pour les entreprises
 Route::prefix('companies')->name('companies.')->group(function () {
     Route::get('/profileform', [CompanyController::class, 'showProfileForm'])->name('profileform');

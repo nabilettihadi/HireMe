@@ -87,20 +87,50 @@ public function store(Request $request)
         return redirect()->route('companies.show', ['company' => $company->id]);
     }
 
-    public function publishJob(Request $request, $companyId)
+    public function showPublishJobForm($companyId)
     {
         $company = Company::findOrFail($companyId);
-        
-        // Valider les données du formulaire
-        $request->validate([
-            // Ajoutez les règles de validation nécessaires ici
-        ]);
-        
-        $job = new JobOffer($request->all());
-        $company->jobs()->save($job);
-        
-        return response()->json(['message' => 'Job published successfully'], 200);
+        return view('companies.publishJob_form', compact('company'));
     }
+    
+    /**
+     * Publie une nouvelle offre d'emploi pour une entreprise.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $companyId
+     * @return \Illuminate\Http\Response
+     */
+    public function publishJob(Request $request, $companyId)
+{
+    // Recherche de l'entreprise
+    $company = Company::findOrFail($companyId);
+    
+    // Validation des données du formulaire
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'required_skills' => 'required|array',
+        'contract_type' => 'required|in:à distance,hybride,à temps plein',
+        'location' => 'required|string',
+        // Ajoutez ici d'autres règles de validation pour les champs de votre formulaire
+    ]);
+    
+    // Création de l'offre d'emploi
+    $job = new JobOffer([
+        'title' => $request->title,
+        'description' => $request->description,
+        'required_skills' => $request->required_skills,
+        'contract_type' => $request->contract_type,
+        'location' => $request->location,
+    ]);
+    
+    // Association de l'offre d'emploi à l'entreprise
+    $company->jobOffers()->save($job);
+    
+    // Redirection avec un message de succès
+    return redirect()->route('companies.dashboard')->with('success', 'L\'offre d\'emploi a été publiée avec succès.');
+}
+
 
     public function viewApplications($companyId)
     {

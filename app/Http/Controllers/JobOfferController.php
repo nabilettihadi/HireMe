@@ -42,6 +42,7 @@ class JobOfferController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'required_skills' => 'required|array', // Assurez-vous que le nom correspond à celui dans le formulaire
             // Ajoutez ici d'autres règles de validation pour les champs de votre formulaire
         ]);
 

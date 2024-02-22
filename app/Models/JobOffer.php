@@ -10,7 +10,7 @@ class JobOffer extends Model
     use HasFactory;
 
     protected $fillable = [
-        'company_id', 'title', 'description', 'skills_required', 'contract_type', 'location', 'visits',
+        'company_id', 'title', 'description', 'required_skills', 'contract_type', 'location', 'visit_count',
     ];
 
     /**
