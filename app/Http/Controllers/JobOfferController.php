@@ -71,23 +71,33 @@ class JobOfferController extends Controller
             // Retourner une réponse JSON indiquant que l'utilisateur n'est pas autorisé
             return response()->json(['message' => 'Unauthorized'], 401);
         }
-
+    
         // Vérifier si l'offre d'emploi existe
         $jobOffer = JobOffer::find($jobId);
         if (!$jobOffer) {
             // Retourner une réponse JSON indiquant que l'offre d'emploi n'a pas été trouvée
             return response()->json(['message' => 'Job offer not found'], 404);
         }
-
+    
+        // Vérifier si l'utilisateur a déjà postulé à cette offre d'emploi
+        $existingApplication = Application::where('user_id', $user->id)
+                                           ->where('job_offer_id', $jobId)
+                                           ->exists();
+    
+        if ($existingApplication) {
+            // Retourner une réponse JSON indiquant que l'utilisateur a déjà postulé à cette offre d'emploi
+            return response()->json(['message' => 'Already applied to this job'], 400);
+        }
+    
         // Créer une nouvelle candidature
         $application = new Application();
         $application->user_id = $user->id;
         $application->job_offer_id = $jobId;
         // Ajouter d'autres champs de la candidature si nécessaire
-
+    
         // Enregistrer la candidature dans la base de données
         $application->save();
-
+    
         // Retourner une réponse JSON pour indiquer que la candidature a été soumise avec succès
         return response()->json(['message' => 'Job application submitted successfully'], 200);
     }
