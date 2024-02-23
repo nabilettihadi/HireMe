@@ -76,14 +76,14 @@ class AdminController extends Controller
     {
         try {
             // Récupérer toutes les offres d'emploi avec pagination
-            $jobs = JobOffer::paginate(10);
+            $jobOffers = JobOffer::paginate(10);
         } catch (\Exception $e) {
             // Gérer l'erreur de récupération des offres d'emploi
             return redirect()->back()->with('error', 'Une erreur est survenue lors de la récupération des offres d\'emploi.');
         }
         
         // Afficher la vue avec la liste paginée des offres d'emploi
-        return view('admin.job_offers', compact('jobs'));
+        return view('admin.job_offers', ['jobOffers' => $jobOffers]);
     }
 
     public function viewStatistics()
@@ -101,5 +101,12 @@ class AdminController extends Controller
 
         return view('admin.statistics', compact('totalUsers', 'totalCompanies'));
     }
+    public function softDeleteJobOffer(Request $request, $id)
+{
+    $jobOffer = JobOffer::findOrFail($id);
+    $jobOffer->delete();
+
+    return redirect()->back()->with('success', 'L\'offre d\'emploi a été archivée avec succès.');
+}
 }
 

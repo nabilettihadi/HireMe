@@ -112,20 +112,25 @@
             </div>
         </div>
     </div>
-    <div id="dropdown-menu" class="hidden absolute bg-gray-900 shadow-lg rounded-lg mt-2 py-2 w-32">
+    <div id="dropdown-menu" class="hidden absolute bg-gray-900 shadow-lg rounded-lg mt-2 py-2 w-32 right-0">
         <ul>
             <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Profil</a></li>
             <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Paramètres</a></li>
-            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Déconnexion</a></li>
+            <li><a href="{{ route('logout') }}" class="block px-4 py-2 text-white hover:bg-gray-800" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a></li>
         </ul>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
     </div>
+    
+    
 </nav>
 
 
 <main class="container mx-auto">
 
     <!-- Carte du profil de l'entreprise -->
-    <div class="card max-w-2xl mx-auto">
+    <div class="card mx-auto max-w-screen-md mb-8">
         <div class="rounded-t-lg overflow-hidden">
             <img class="object-cover object-top w-full" src='https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ' alt='Mountain'>
         </div>
@@ -156,13 +161,35 @@
         
     </div>
 
-    <!-- Carte des offres d'emploi de l'entreprise -->
-    <div class="card max-w-2xl mx-auto">
-        <!-- Contenu des offres d'emploi -->
+
+<!-- Carte des offres d'emploi de l'entreprise -->
+<div class="card mx-auto max-w-screen-md mb-8">
+    <div class="text-center mb-4">
+        <h2 class="text-xl font-semibold">Offres d'emploi</h2>
     </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <?php
+        // Supposons que vous ayez un tableau d'offres d'emploi $jobOffers
+        foreach ($jobOffers as $offer) {
+        ?>
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-2"><?= $offer['title'] ?></h3>
+                    <p class="text-gray-600 mb-4"><?= $offer['description'] ?></p>
+                    <p class="text-gray-500"><?= $offer['posted_at'] ?></p>
+                </div>
+                <div class="p-4 bg-gray-100 border-t border-gray-200">
+                    <a href="<?= $offer['link'] ?>" class="text-blue-500 font-semibold hover:text-blue-600">Voir plus</a>
+                </div>
+            </div>
+        <?php
+        }
+        ?>
+    </div>
+</div>
 
     <!-- Carte des candidatures des utilisateurs -->
-    <div class="card max-w-2xl mx-auto">
+    <div class="card mx-auto max-w-screen-md mb-8">
         <!-- Contenu des candidatures -->
     </div>
 

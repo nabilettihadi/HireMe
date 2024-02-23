@@ -18,7 +18,8 @@ class CompanyController extends Controller
 
     public function dashboard()
     {
-        return view('companies.dashboard');
+        $jobOffers = JobOffer::where('company_id', auth()->user()->company->id)->get();
+        return view('companies.dashboard', ['jobOffers' => $jobOffers]);
     }
     public function showProfileForm()
 {

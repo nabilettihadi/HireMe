@@ -18,6 +18,7 @@ class CreateJobOffersTable extends Migration
             $table->enum('contract_type', ['à distance', 'hybride', 'à temps plein']);
             $table->string('location');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

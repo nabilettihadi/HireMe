@@ -98,7 +98,7 @@ Route::prefix('job_offers')->name('job_offers.')->group(function () {
     Route::get('/create', [JobOfferController::class, 'create'])->name('create');
     Route::post('/', [JobOfferController::class, 'store'])->name('store');
 });
-
+Route::delete('job_offers/{id}', [AdminController::class, 'softDeleteJobOffer'])->name('softDeleteJobOffer');
 // Routes pour les candidatures
 Route::get('/applications', [ApplicationController::class, 'index'])->name('applications.index');
 Route::get('/applications/{id}', [ApplicationController::class, 'show'])->name('applications.show');
