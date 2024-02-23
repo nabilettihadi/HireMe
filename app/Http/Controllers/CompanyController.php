@@ -136,18 +136,18 @@ public function jobOffersForCompany()
     // Récupérer l'utilisateur connecté
     $user = auth()->user();
 
-    // Récupérer l'entreprise de l'utilisateur connecté
-    $company = $user->company;
+    // Vérifier si l'utilisateur est connecté et associé à une entreprise
+    if ($user && $user->company) {
+        // Récupérer l'entreprise de l'utilisateur connecté
+        $company = $user->company;
 
-    // Vérifier si l'entreprise existe pour éviter les erreurs potentielles
-    if ($company) {
         // Récupérer les offres d'emploi de l'entreprise
-        $jobOffers = $company->jobOffers; // jobOffers est la relation définie dans votre modèle Company
+        $jobOffers = $company->jobOffers;
 
         return view('job_offers.index', ['jobOffers' => $jobOffers]);
     } else {
-        // Gérer le cas où l'entreprise n'existe pas
-        // Par exemple, rediriger l'utilisateur vers une page d'erreur
+        // Gérer le cas où l'utilisateur n'est pas connecté ou n'est pas associé à une entreprise
+        // Par exemple, rediriger l'utilisateur vers une page d'erreur ou afficher un message
         return redirect()->route('error');
     }
 }

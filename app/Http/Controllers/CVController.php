@@ -11,18 +11,29 @@ class CVController extends Controller
         // Valider les données du formulaire
         $request->validate([
             'skills' => 'required|array',
+            'skills.*' => 'required|string',
             'experiences' => 'required|string',
             'education' => 'required|string',
             'languages' => 'required|array',
+            'languages.*' => 'required|string',
         ]);
-
+    
         // Enregistrer les données du CV dans la base de données
         $cv = new CurriculumVitae();
         $cv->user_id = auth()->id();
-        $cv->skills = $request->skills;
+            
+        // Enregistrer les compétences (skills)
+        foreach ($request->skills as $skill) {
+            $cv->skills()->create(['name' => $skill]);
+        }
+    
+        // Enregistrer les langues (languages)
+        foreach ($request->languages as $language) {
+            $cv->languages()->create(['name' => $language]);
+        }
+    
+        $cv->educations = $request->educations;
         $cv->experiences = $request->experiences;
-        $cv->education = $request->education;
-        $cv->languages = $request->languages;
         $cv->save();
 
         // Rediriger avec un message de succès

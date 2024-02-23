@@ -75,8 +75,8 @@ Route::get('/companies/{companyId}/publish-job', [CompanyController::class, 'sho
 // Publier une offre d'emploi
 Route::post('/companies/{companyId}/publish-job', [CompanyController::class, 'publishJob'])->name('companies.publishJob');
 
-Route::get('/companies/{companyId}', 'CompanyController@jobOffersForCompany')->name('companies.jobOffersForCompany');
-
+Route::get('/companies', [CompanyController::class, 'jobOffersForCompany'])->name('companies.jobOffersForCompany');
+Route::get('/companies/job-offers', [CompanyController::class, 'jobOffersForCompany'])->name('companies.jobOffersForCompany');
 // Routes pour les entreprises
 Route::prefix('companies')->name('companies.')->group(function () {
     Route::get('/profileform', [CompanyController::class, 'showProfileForm'])->name('profileform');
@@ -87,13 +87,13 @@ Route::prefix('companies')->name('companies.')->group(function () {
     Route::get('/{id}/edit', [CompanyController::class, 'edit'])->name('edit');
     Route::put('/{id}', [CompanyController::class, 'update'])->name('update');
     Route::get('/', [CompanyController::class, 'index'])->name('index');
-    Route::get('/{companyId}', [CompanyController::class, 'jobOffersForCompany'])->name('companies.jobOffersForCompany');
+
 });
 
 // Routes pour les offres d'emploi
 Route::prefix('job_offers')->name('job_offers.')->group(function () {
     Route::get('/', [JobOfferController::class, 'index'])->name('index');
-    Route::get('/', [JobOfferController::class, 'jobcompany'])->name('jobcompany');
+    Route::get('/company', [JobOfferController::class, 'jobcompany'])->name('jobcompany'); // Change the URI to differentiate it
     Route::get('/{id}', [JobOfferController::class, 'show'])->name('show');
     Route::get('/create', [JobOfferController::class, 'create'])->name('create');
     Route::post('/', [JobOfferController::class, 'store'])->name('store');
