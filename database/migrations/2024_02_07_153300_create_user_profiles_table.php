@@ -18,7 +18,6 @@ class CreateUserProfilesTable extends Migration
             $table->string('address')->nullable();
             $table->string('contact_information')->nullable();
             $table->text('about')->nullable();
-            $table->string('resume')->nullable();
             $table->timestamps();
         });
     }

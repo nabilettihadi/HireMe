@@ -17,10 +17,20 @@ class CompanyController extends Controller
     }
 
     public function dashboard()
-    {
-        $jobOffers = JobOffer::where('company_id', auth()->user()->company->id)->get();
-        return view('companies.dashboard', ['jobOffers' => $jobOffers]);
-    }
+{
+    // Récupérez les informations de l'entreprise de l'utilisateur authentifié
+    $user = auth()->user();
+    $company = $user->company;
+
+    // Récupérez également d'autres données nécessaires, comme les offres d'emploi
+    $jobOffers = $company->jobOffers()->get();
+
+    // Passez les données à la vue
+    return view('companies.dashboard', [
+        'company' => $company,
+        'jobOffers' => $jobOffers,
+    ]);
+}
     public function showProfileForm()
 {
     return view('companies.profileforme');
@@ -154,12 +164,13 @@ public function jobOffersForCompany()
 }
 
 
-    public function viewApplications($companyId)
-    {
-        $company = Company::findOrFail($companyId);
-        $applications = $company->applications;
-        return view('companies.applications', ['company' => $company, 'applications' => $applications]);
-    }
+public function viewApplications($companyId)
+{
+    $company = Company::findOrFail($companyId);
+    // Récupérer les candidatures associées à cette entreprise avec les détails de l'utilisateur et de l'offre d'emploi
+    $applications = $company->applications()->with('user', 'jobOffer')->get();
+    return view('companies.applications', ['company' => $company, 'applications' => $applications]);
+}
 }
 
 

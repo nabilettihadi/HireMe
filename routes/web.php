@@ -40,7 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
     });
 });
-
+Route::get('/user/applications', [UserController::class, 'viewApplications'])->name('users.applications');
 // Routes pour l'administration
 Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
@@ -71,10 +71,10 @@ Route::get('/languages/{id}', [LanguageController::class, 'show'])->name('langua
 
 // Afficher le formulaire de publication d'offre d'emploi
 Route::get('/companies/{companyId}/publish-job', [CompanyController::class, 'showPublishJobForm'])->name('companies.showPublishJobForm');
+Route::get('/companies/{companyId}/applications', [CompanyController::class, 'viewApplications'])->name('companies.applications');
 
 // Publier une offre d'emploi
 Route::post('/companies/{companyId}/publish-job', [CompanyController::class, 'publishJob'])->name('companies.publishJob');
-
 Route::get('/companies', [CompanyController::class, 'jobOffersForCompany'])->name('companies.jobOffersForCompany');
 Route::get('/companies/job-offers', [CompanyController::class, 'jobOffersForCompany'])->name('companies.jobOffersForCompany');
 // Routes pour les entreprises

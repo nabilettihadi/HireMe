@@ -96,7 +96,7 @@
         <ul id="menu" class="hidden lg:flex space-x-4">
             <li><a href="{{ route('companies.profile') }}" class="text-white hover:text-blue-600">Profil</a></li>
             <li><a href="{{ route('companies.jobOffersForCompany') }}" class="text-white hover:text-blue-600">Offres d'emploi</a></li>
-            <li><a href="{{ route('applications.index') }}" class="text-white hover:text-blue-600">Candidatures</a></li>
+            <li><a href="{{ route('companies.applications', ['companyId' => $company->id]) }}" class="text-white hover:text-blue-600">Candidatures</a></li>
         </ul>
         <div class="flex items-center space-x-4">
             <button id="menu-toggle" class="lg:hidden focus:outline-none">

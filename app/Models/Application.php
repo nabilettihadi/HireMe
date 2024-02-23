@@ -24,4 +24,13 @@ class Application extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function jobOffer()
+    {
+        return $this->belongsTo(JobOffer::class);
+    }
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

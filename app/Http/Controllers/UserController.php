@@ -117,6 +117,16 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Skill added successfully');
     }
+
+    public function viewApplications()
+    {
+        // Récupérer les candidatures de l'utilisateur avec les détails de l'offre d'emploi
+        $user = auth()->user();
+        $applications = $user->applications()->with('jobOffer')->get();
+        
+        // Retourner la vue avec les données des candidatures
+        return view('users.applications', compact('applications'));
+    }
 }
 
 

@@ -33,4 +33,9 @@ class Company extends Authenticatable
     {
         return $this->belongsTo(User::class);
     }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
 }

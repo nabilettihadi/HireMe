@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
+    <title>User Dashboard - Applications</title>
     <!-- Intégration de Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
@@ -67,52 +67,29 @@
         </div>
     </nav>
 
-    <!-- Contenu du dashboard -->
+    <!-- Contenu du tableau de bord -->
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <!-- Contenu principal -->
-        <div class="px-4 py-6 sm:px-0">
-            <!-- Titre -->
-            <h1 class="text-2xl font-semibold text-gray-900">Welcome to Your Dashboard, @auth {{ Auth::user()->name }} @else Guest @endauth!</h1>
-            <!-- Description -->
-            <p class="mt-2 text-sm text-gray-600">Here you can update your profile, search for jobs, and more.</p>
-            <!-- Cards pour les fonctionnalités principales -->
-            <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                <!-- Card pour la mise à jour du profil -->
-                <div class="bg-white overflow-hidden shadow-md rounded-lg">
-                    <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-lg font-medium text-gray-900">Update Your Profile</h3>
-                        <p class="mt-2 text-sm text-gray-600">Keep your profile information up to date.</p>
-                        <a href="{{ route('profile.completeForm') }}" class="mt-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">Complete Profile &rarr;</a>
+        <!-- Titre -->
+        <h1 class="text-3xl font-semibold text-gray-900 px-4">Your Applications</h1>
+        <!-- Liste des candidatures -->
+        <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 px-4">
+            @forelse ($applications as $application)
+                <!-- Card pour chaque candidature -->
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2">{{ $application->jobOffer->title }}</h3>
+                        <p class="text-gray-600 mb-4">Company: {{ $application->jobOffer->company->name }}</p>
+                        <p class="text-gray-600 mb-4">Applied On: {{ $application->created_at }}</p>
+                        <!-- Ajoutez d'autres détails de la candidature ici si nécessaire -->
+                    </div>
+                    <div class="p-4 bg-gray-100 border-t border-gray-200">
+                        <!-- Ajoutez des liens ou des boutons pour gérer les candidatures si nécessaire -->
                     </div>
                 </div>
-                <!-- Card pour la recherche d'emplois -->
-                <div class="bg-white overflow-hidden shadow-md rounded-lg">
-                    <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-lg font-medium text-gray-900">Search for Jobs</h3>
-                        <p class="mt-2 text-sm text-gray-600">Find the perfect job opportunity.</p>
-                        <a href="{{ route('job_offers.index') }}" class="mt-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">Start Searching &rarr;</a>
-                    </div>
-                </div>
-                <!-- Card pour la recherche d'entreprises -->
-                <div class="bg-white overflow-hidden shadow-md rounded-lg">
-                    <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-lg font-medium text-gray-900">Search for Companies</h3>
-                        <p class="mt-2 text-sm text-gray-600">Discover companies and their job openings.</p>
-                        <a href="{{ route('companies.index') }}" class="mt-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">Find Companies &rarr;</a>
-                    </div>
-                </div>
-                <!-- Card pour visualiser les candidatures -->
-<div class="bg-white overflow-hidden shadow-md rounded-lg">
-    <div class="px-4 py-5 sm:p-6">
-        <h3 class="text-lg font-medium text-gray-900">Your Applications</h3>
-        <p class="mt-2 text-sm text-gray-600">View the applications you've submitted.</p>
-        <a href="{{ route('users.applications') }}" class="mt-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">View Applications &rarr;</a>
-    </div>
-</div>
-
-                
-
-            </div>
+            @empty
+                <!-- Message si aucune candidature n'est trouvée -->
+                <p class="text-gray-600 px-4">No applications found.</p>
+            @endforelse
         </div>
     </main>
 
