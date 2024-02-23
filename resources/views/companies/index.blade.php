@@ -14,7 +14,7 @@
                         <!-- Add other company information here if necessary -->
                         <div class="mt-4">
                             <a href="{{ route('companies.show', $company->id) }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-700">Voir</a>
-                            <a href="{{ route('companies.edit', $company->id) }}" class="ml-2 text-sm font-semibold text-indigo-600 hover:text-indigo-700">Modifier</a>
+                            {{-- <a href="{{ route('companies.edit', $company->id) }}" class="ml-2 text-sm font-semibold text-indigo-600 hover:text-indigo-700">Modifier</a> --}}
                             <!-- Add other actions like deletion if necessary -->
                         </div>
                     </div>

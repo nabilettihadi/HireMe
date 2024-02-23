@@ -89,37 +89,40 @@
 </head>
 <body>
 
-<!-- Barre de navigation -->
-<nav class="bg-gray-900">
-    <div class="container mx-auto px-4 py-6 flex justify-between items-center">
-        <h1 class="text-lg font-bold text-white">HireMe</h1>
-        <ul id="menu" class="hidden lg:flex space-x-4">
-            <li><a href="{{ route('companies.profile') }}" class="text-white hover:text-blue-600">Profil</a></li>
-            <li><a href="{{ route('job_offers.index') }}" class="text-white hover:text-blue-600">Offres d'emploi</a></li>
-            <li><a href="{{ route('applications.index') }}" class="text-white hover:text-blue-600">Candidatures</a></li>
-            <li><a href="#statistiques" class="text-white hover:text-blue-600">Statistiques</a></li>
-        </ul>
-        <div class="flex items-center space-x-4">
-            <button id="menu-toggle" class="lg:hidden focus:outline-none">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-            <div class="relative">
-                <button id="profile-toggle" class="text-white focus:outline-none">
-                    <i class="fas fa-user-circle fa-lg"></i>
+    <nav class="bg-gray-900">
+        <div class="container mx-auto px-4 py-6 flex justify-between items-center">
+            <h1 class="text-lg font-bold text-white">HireMe</h1>
+            <ul id="menu" class="hidden lg:flex space-x-4">
+                <li><a href="{{ route('companies.profile') }}" class="text-white hover:text-blue-600">Profil</a></li>
+                <li><a href="{{ route('companies.jobOffersForCompany') }}" class="text-white hover:text-blue-600">Offres d'emploi</a></li>
+                <li><a href="{{ route('applications.index') }}" class="text-white hover:text-blue-600">Candidatures</a></li>
+            </ul>
+            <div class="flex items-center space-x-4">
+                <button id="menu-toggle" class="lg:hidden focus:outline-none">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
                 </button>
+                <div class="relative">
+                    <button id="profile-toggle" class="text-white focus:outline-none">
+                        <i class="fas fa-user-circle fa-lg"></i>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="dropdown-menu" class="hidden absolute bg-gray-900 shadow-lg rounded-lg mt-2 py-2 w-32">
-        <ul>
-            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Profil</a></li>
-            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Paramètres</a></li>
-            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Déconnexion</a></li>
-        </ul>
-    </div>
-</nav>
+        <div id="dropdown-menu" class="hidden absolute bg-gray-900 shadow-lg rounded-lg mt-2 py-2 w-32 right-0">
+            <ul>
+                <li><a href="{{ route('companies.profile') }}" class="block px-4 py-2 text-white hover:bg-gray-800">Profil</a></li>
+                {{-- <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Paramètres</a></li> --}}
+                <li><a href="{{ route('logout') }}" class="block px-4 py-2 text-white hover:bg-gray-800" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a></li>
+            </ul>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
+        
+        
+    </nav>
 
 <main class="container mx-auto">
 

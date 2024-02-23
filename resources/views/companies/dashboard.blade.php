@@ -97,7 +97,6 @@
             <li><a href="{{ route('companies.profile') }}" class="text-white hover:text-blue-600">Profil</a></li>
             <li><a href="{{ route('companies.jobOffersForCompany') }}" class="text-white hover:text-blue-600">Offres d'emploi</a></li>
             <li><a href="{{ route('applications.index') }}" class="text-white hover:text-blue-600">Candidatures</a></li>
-            <li><a href="#statistiques" class="text-white hover:text-blue-600">Statistiques</a></li>
         </ul>
         <div class="flex items-center space-x-4">
             <button id="menu-toggle" class="lg:hidden focus:outline-none">
@@ -114,8 +113,8 @@
     </div>
     <div id="dropdown-menu" class="hidden absolute bg-gray-900 shadow-lg rounded-lg mt-2 py-2 w-32 right-0">
         <ul>
-            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Profil</a></li>
-            <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Paramètres</a></li>
+            <li><a href="{{ route('companies.profile') }}" class="block px-4 py-2 text-white hover:bg-gray-800">Profil</a></li>
+            {{-- <li><a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Paramètres</a></li> --}}
             <li><a href="{{ route('logout') }}" class="block px-4 py-2 text-white hover:bg-gray-800" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a></li>
         </ul>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

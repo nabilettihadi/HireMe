@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use PDF;
+
 use Illuminate\Http\Request;
 use App\Models\CurriculumVitae;
-
+use Barryvdh\DomPDF\Facade as PDF;
 class CVController extends Controller
-{public function save(Request $request)
+{
+    
+    public function save(Request $request)
     {
         // Valider les données du formulaire
         $request->validate([
@@ -76,14 +78,4 @@ class CVController extends Controller
         // Télécharger le PDF
         return $pdf->download('cv.pdf');
     }
-
-    /**
-     * Enregistre les données du CV.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    
 }
-
-
