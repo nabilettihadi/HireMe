@@ -87,6 +87,7 @@ class UserController extends Controller
         return response()->json(['message' => 'Job application submitted successfully'], 200);
     }
 
+
     public function addSkill(Request $request)
     {
         // Récupérer l'utilisateur authentifié

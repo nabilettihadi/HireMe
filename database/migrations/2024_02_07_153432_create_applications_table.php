@@ -12,7 +12,6 @@ class CreateApplicationsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('job_offer_id')->constrained()->onDelete('cascade');
-            $table->text('cover_letter');
             $table->timestamps();
         });
     }

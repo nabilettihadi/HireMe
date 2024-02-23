@@ -12,7 +12,7 @@ class Application extends Model
     protected $fillable = [
         'user_id',
         'job_id',
-        // Ajoutez d'autres attributs si nécessaire
+
     ];
 
     /**
