@@ -14,10 +14,10 @@
             <h1 class="text-xl font-semibold">Admin Dashboard</h1>
             <div>
                 <a href="#" class="hover:text-gray-300 mr-4">Dashboard</a>
-                <a href="#" class="hover:text-gray-300 mr-4">Users</a>
-                <a href="#" class="hover:text-gray-300 mr-4">Companies</a>
-                <a href="#" class="hover:text-gray-300 mr-4">Jobs</a>
-                <a href="#" class="hover:text-gray-300 mr-4">Statistics</a>
+                <a href="{{ route('admin.manageUsers') }}" class="hover:text-gray-300 mr-4">Users</a>
+                <a href="{{ route('admin.manageCompanies') }}" class="hover:text-gray-300 mr-4">Companies</a>
+                <a href="{{ route('admin.manageJobs') }}" class="hover:text-gray-300 mr-4">Jobs</a>
+                <a href="{{ route('admin.viewStatistics') }}" class="hover:text-gray-300 mr-4">Statistics</a>
                 <a href="{{ route('logout') }}" class="hover:text-gray-300" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Déconnexion</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
