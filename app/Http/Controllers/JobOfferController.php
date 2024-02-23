@@ -103,10 +103,4 @@ class JobOfferController extends Controller
         // Retourner les résultats de la recherche à la vue
         return view('jobs.search', ['results' => $results]);
     }
-    /**
-     * Soft delete a job offer.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    
+}
