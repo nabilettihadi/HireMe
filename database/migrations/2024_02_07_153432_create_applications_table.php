@@ -11,10 +11,9 @@ class CreateApplicationsTable extends Migration
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->unsignedBigInteger('company_id');
+            $table->foreignId('company_id')->constrained()->onDelete('cascade');
             $table->foreignId('job_offer_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 

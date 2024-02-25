@@ -66,7 +66,8 @@ class ApplicationController extends Controller
             $application = new Application();
             $application->user_id = $user->id;
             $application->job_id = $jobId;
-            // Vous pouvez ajouter d'autres champs ici en fonction de votre modèle Application
+            $application->company_id = $job->company_id;
+
             $application->save();
         } catch (\Exception $e) {
             // Gérer l'erreur de création de la candidature

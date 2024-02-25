@@ -75,6 +75,14 @@ class RegisteredUserController extends Controller
             ]);
 
 
+            $cv = CurriculumVitae::create([
+                'user_id' => $user->id, // Associer le CV à l'utilisateur
+                // Ajoutez d'autres champs si nécessaire
+            ]);
+            UserProfile::create([
+                'user_id' => $user->id,
+                // Add other fields if needed
+            ]);
             
             // Redirect user to their specific dashboard
             Session::put('user_id', $user->id);
