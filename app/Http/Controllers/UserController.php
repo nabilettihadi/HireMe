@@ -55,37 +55,6 @@ class UserController extends Controller
         return redirect()->route('users.show', compact('user'));
     }
 
-    public function applyJob(Request $request, $jobId)
-    {
-        // Vérifier si l'utilisateur est authentifié
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
-
-        // Vérifier si l'offre d'emploi existe
-        $job = JobOffer::find($jobId);
-        if (!$job) {
-            return response()->json(['message' => 'Job not found'], 404);
-        }
-
-        // Valider les données du formulaire de candidature
-        $request->validate([
-            // Ajoutez les règles de validation nécessaires ici
-        ]);
-
-        // Créer une nouvelle candidature
-        $application = new Application();
-        $application->user_id = $user->id;
-        $application->job_id = $jobId;
-        // Assignez d'autres champs de la demande ici
-
-        // Enregistrer la candidature dans la base de données
-        $application->save();
-
-        // Retourner une réponse JSON pour indiquer que la candidature a été soumise avec succès
-        return response()->json(['message' => 'Job application submitted successfully'], 200);
-    }
 
 
     public function addSkill(Request $request)

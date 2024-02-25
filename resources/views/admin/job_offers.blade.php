@@ -25,7 +25,7 @@
                             <form action="{{ route('softDeleteJobOffer', $jobOffer->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900">Supprimer</button>
+                                <button type="submit" class="text-red-600 hover:text-red-900">Archiver</button>
                             </form>
                         </td>
                         <!-- Ajoutez d'autres données sur l'offre d'emploi si nécessaire -->

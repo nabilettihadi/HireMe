@@ -42,40 +42,7 @@ class ApplicationController extends Controller
         return view('applications.show', compact('application'));
     }
 
-    public function apply(Request $request, $jobId)
-    {
-        // Vérifier si l'utilisateur est authentifié (auth middleware)
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
-
-        // Vérifier si l'offre d'emploi existe
-        $job = JobOffer::find($jobId);
-        if (!$job) {
-            return response()->json(['message' => 'Job not found'], 404);
-        }
-
-        // Vérifier si l'utilisateur a déjà postulé à cette offre d'emploi
-        if ($user->applications->where('job_id', $jobId)->exists()) {
-            return response()->json(['message' => 'Already applied to this job'], 400);
-        }
-
-        // Créer une nouvelle candidature
-        try {
-            $application = new Application();
-            $application->user_id = $user->id;
-            $application->job_id = $jobId;
-            $application->company_id = $job->company_id;
-
-            $application->save();
-        } catch (\Exception $e) {
-            // Gérer l'erreur de création de la candidature
-            return response()->json(['message' => 'Failed to submit application'], 500);
-        }
-
-        return response()->json(['message' => 'Application submitted successfully'], 200);
-    }
+    
 
     public function viewApplications($userId)
     {
