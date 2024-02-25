@@ -93,7 +93,7 @@ class JobOfferController extends Controller
         $application = new Application();
         $application->user_id = $user->id;
         $application->job_offer_id = $jobId;
-        // Ajouter d'autres champs de la candidature si nécessaire
+        $application->company_id = $jobOffer->company->id;
     
         // Enregistrer la candidature dans la base de données
         $application->save();
