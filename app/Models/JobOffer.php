@@ -19,8 +19,9 @@ class JobOffer extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function company() {
-        return $this->belongsTo(Company::class);
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
     }
     public function application()
     {

@@ -110,19 +110,21 @@ class JobOfferController extends Controller
 
 
      public function search(Request $request)
-     {
-         $searchTerm = $request->input('term');
-     
-         $jobOffers = JobOffer::where('title', 'like', '%' . $searchTerm . '%')
-                              ->orWhere('company_name', 'like', '%' . $searchTerm . '%')
-                              ->orWhere('contract_type', 'like', '%' . $searchTerm . '%')
-                              ->orWhere('location', 'like', '%' . $searchTerm . '%')
-                              ->orWhere('description', 'like', '%' . $searchTerm . '%')
-                              ->orWhere('required_skills', 'like', '%' . $searchTerm . '%')
-                              ->get();
-     
-         return response()->json($jobOffers);
-     }
+{
+    $searchTerm = $request->input('term');
 
+    $jobOffers = JobOffer::where('title', 'like', '%' . $searchTerm . '%')
+                         ->orWhere('contract_type', 'like', '%' . $searchTerm . '%')
+                         ->orWhere('location', 'like', '%' . $searchTerm . '%')
+                         ->orWhere('description', 'like', '%' . $searchTerm . '%')
+                         ->orWhere('required_skills', 'like', '%' . $searchTerm . '%')
+                         ->get();
+
+    if ($jobOffers->isNotEmpty()) {
+        return view('searchResult', ['jobOffers' => $jobOffers]);
+    } else {
+        return view('job_offers.searchResult', ['fail' => 'Aucune offre n\'a été trouvée']);
+    }
+}
 
 }
