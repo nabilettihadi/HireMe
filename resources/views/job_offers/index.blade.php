@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Offres d'Emploi</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto py-8">
@@ -34,39 +35,50 @@
         </div>
     </div>
 
+    
     <script>
-        const searchInput = document.getElementById('searchInput');
-        const jobOffersContainer = document.getElementById('jobOffersContainer');
-
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.trim();
-
-            fetch(`/search?term=${searchTerm}`)
-                .then(response => response.json())
-                .then(data => {
-                    jobOffersContainer.innerHTML = '';
-                    data.forEach(jobOffer => {
-                        const card = `
-                            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                                <img class="w-full h-48 object-cover object-center" src="https://source.unsplash.com/800x600/?job" alt="Job Image">
-                                <div class="p-4">
-                                    <h2 class="text-xl font-semibold mb-2">${jobOffer.title}</h2>
-                                    <p class="text-gray-600 text-sm mb-2">${jobOffer.company_name}</p>
-                                    <p class="text-gray-700 text-sm mb-2">Type de Contrat: ${jobOffer.contract_type}</p>
-                                    <p class="text-gray-700 text-sm mb-2">Localisation: ${jobOffer.location}</p>
-                                    <p class="text-gray-700 text-sm mb-2">${jobOffer.description}</p>
-                                    <p class="text-gray-700 text-sm mb-2">Compétences Requises: ${jobOffer.required_skills}</p>
-                                    <a href="/job_offers/${jobOffer.id}" class="text-blue-500 hover:text-blue-700">Voir</a>
-                                </div>
-                            </div>
-                        `;
-                        jobOffersContainer.insertAdjacentHTML('beforeend', card);
-                    });
-                })
-                .catch(error => console.error('Error fetching job offers:', error));
+        $(document).ready(function() {
+    $('#searchInput').on('input', function() {
+        const searchTerm = $(this).val().trim();
+        
+        $.ajax({
+            url: '{{ route("job_offers.search") }}',
+            method: 'GET',
+            data: { term: searchTerm },
+            success: function(data) {
+                renderJobOffers(data);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching job offers:', error);
+            }
         });
+    });
+
+    function renderJobOffers(data) {
+        const jobOffersContainer = $('#jobOffersContainer');
+        jobOffersContainer.empty();
+        
+        data.forEach(jobOffer => {
+            const card = `
+                <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <img class="w-full h-48 object-cover object-center" src="https://source.unsplash.com/800x600/?job" alt="Job Image">
+                    <div class="p-4">
+                        <h2 class="text-xl font-semibold mb-2">${jobOffer.title}</h2>
+                        <p class="text-gray-600 text-sm mb-2">${jobOffer.company_name}</p>
+                        <p class="text-gray-700 text-sm mb-2">Type de Contrat: ${jobOffer.contract_type}</p>
+                        <p class="text-gray-700 text-sm mb-2">Localisation: ${jobOffer.location}</p>
+                        <p class="text-gray-700 text-sm mb-2">${jobOffer.description}</p>
+                        <p class="text-gray-700 text-sm mb-2">Compétences Requises: ${jobOffer.required_skills}</p>
+                        <a href="/job_offers/${jobOffer.id}" class="text-blue-500 hover:text-blue-700">Voir</a>
+                    </div>
+                </div>
+            `;
+            jobOffersContainer.append(card);
+        });
+    }
+});
     </script>
+
+    
 </body>
 </html>
-
-

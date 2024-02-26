@@ -90,7 +90,7 @@ Route::prefix('companies')->name('companies.')->group(function () {
 
 });
 Route::post('/job_offers/{jobId}/apply', [JobOfferController::class, 'applyJob'])->name('job_offers.apply');
-Route::get('/search', [JobOfferController::class, 'search'])->name('job_offers.search');
+Route::get('/job_offers/search', [JobOfferController::class, 'search'])->name('job_offers.search');
 // Routes pour les offres d'emploi
 Route::prefix('job_offers')->name('job_offers.')->group(function () {
     Route::get('/', [JobOfferController::class, 'index'])->name('index');

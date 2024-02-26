@@ -107,38 +107,22 @@ class JobOfferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
-    public function search(Request $request): \Illuminate\View\View
-    {
-        // Récupérer les paramètres de recherche
-        $title = $request->input('title');
-        $skills = $request->input('skills');
-        $contractType = $request->input('contract_type');
-        $location = $request->input('location');
 
-        // Commencer la requête de recherche
-        $jobOffers = JobOffer::query();
 
-        // Appliquer les filtres de recherche
-        if ($title) {
-            $jobOffers->where('title', 'like', '%' . $title . '%');
-        }
+     public function search(Request $request)
+     {
+         $searchTerm = $request->input('term');
+     
+         $jobOffers = JobOffer::where('title', 'like', '%' . $searchTerm . '%')
+                              ->orWhere('company_name', 'like', '%' . $searchTerm . '%')
+                              ->orWhere('contract_type', 'like', '%' . $searchTerm . '%')
+                              ->orWhere('location', 'like', '%' . $searchTerm . '%')
+                              ->orWhere('description', 'like', '%' . $searchTerm . '%')
+                              ->orWhere('required_skills', 'like', '%' . $searchTerm . '%')
+                              ->get();
+     
+         return response()->json($jobOffers);
+     }
 
-        if ($skills) {
-            $jobOffers->where('skills', 'like', '%' . $skills . '%');
-        }
 
-        if ($contractType) {
-            $jobOffers->where('contract_type', $contractType);
-        }
-
-        if ($location) {
-            $jobOffers->where('location', 'like', '%' . $location . '%');
-        }
-
-        // Exécuter la requête et récupérer les résultats paginés
-        $results = $jobOffers->paginate(10);
-
-        // Retourner les résultats de la recherche à la vue
-        return view('jobs.search', ['results' => $results]);
-    }
 }
