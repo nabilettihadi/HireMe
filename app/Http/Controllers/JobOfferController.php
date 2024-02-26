@@ -121,7 +121,7 @@ class JobOfferController extends Controller
                          ->get();
 
     if ($jobOffers->isNotEmpty()) {
-        return view('searchResult', ['jobOffers' => $jobOffers]);
+        return view('job_offers.searchResult', ['jobOffers' => $jobOffers]);
     } else {
         return view('job_offers.searchResult', ['fail' => 'Aucune offre n\'a été trouvée']);
     }
