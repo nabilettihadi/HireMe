@@ -118,6 +118,9 @@ class JobOfferController extends Controller
                          ->orWhere('location', 'like', '%' . $searchTerm . '%')
                          ->orWhere('description', 'like', '%' . $searchTerm . '%')
                          ->orWhere('required_skills', 'like', '%' . $searchTerm . '%')
+                         ->orWhereHas('company', function ($query) use ($searchTerm) {
+                            $query->where('name', 'like', '%' . $searchTerm . '%');
+                        })
                          ->get();
 
     if ($jobOffers->isNotEmpty()) {
