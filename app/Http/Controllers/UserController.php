@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\UserProfile;
 use App\Models\JobOffer;
 use App\Models\Skill;
 use App\Models\Application;
@@ -49,10 +50,13 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        $user->update($request->all());
-        return redirect()->route('users.show', compact('user'));
+    {$data = $request->all();
+
+        auth()->user()->profile->update($data);
+        
+        // $user = UserProfile::findOrFail($id);
+        // $user->update($request->all());
+        return redirect()->route('users.dashboard');
     }
 
 

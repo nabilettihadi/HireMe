@@ -18,6 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->string('industry')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
